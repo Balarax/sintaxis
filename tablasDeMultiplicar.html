@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>hello world</title>
+    </head>
+
+    <body>
+            <script type= "text/javascript">
+
+                var num=0;
+
+                num=window.prompt('Ingresa un numero(1-10)','');
+                num=parseInt(num);
+                 
+                document.write("<table border='2'>");
+                 
+                var x=0;
+                 
+                for (x = 1; x <= 10; x++)
+                {
+                    resul=num*x;
+
+                    document.write("<tr><td>"+num+"x"+x+"</td><td>=</td><td>"+resul+"</td></tr>");
+                }
+                 
+                document.write("</table>");
+                 
+                </script>
+    </body>
+</html>
