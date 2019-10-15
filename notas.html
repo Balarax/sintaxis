@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>hello world</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    
+        var nombre = window.prompt('Introduce nombre');
+        var apellidos = window.prompt('Introduce los apellidos');
+        var nota1 = window.prompt('Introduce la primera nota');
+        var nota2 = window.prompt('Introduce la segunda nota');
+
+        nota1 = parseInt(nota1);
+        nota2 = parseInt(nota2);
+
+        notafinal = ((nota1 * 0.6) + (nota2 * 0.4)) / 1;
+
+        alert(apellidos + "," + nombre + "..............." + nota1 + " " + nota2 + " " + notafinal);
+
+    </script>
+
+</body>
+
+</html>
