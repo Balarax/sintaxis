@@ -1,0 +1,53 @@
+<!-- en base a la edad que le pedimos al usuarios se ofrece el precio del abono transporte
+
+precio normal 60
+
+
+<16 un 20% de descuento
+<18 un 15%
+entre 18 y 65 0%
+>65 50% -->
+
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>hello world</title>
+    </head>
+
+    <body>
+            <script>
+                  var edad = window.prompt('Introduce tu edad');
+                  var empadronado = window.prompt('¿Estas empadronado?(s/n)');
+                  parseInt(edad);
+                  var precio;
+
+                  if (edad<16) {
+                      precio=60*0.8;
+
+                      if (empadronado==="s") {
+                          precio=60*0.7;
+                      }
+                  }else if(edad<18){
+                    precio=60*0.85;
+                    if (empadronado==="s") {
+                          precio=60*0.8;
+                      }
+                  }else if(edad<65){
+                      precio=60;
+                      if (empadronado==="s") {
+                          precio=60*0.95;
+                      }
+                  }else{
+                      precio=60*0.5;
+                      if (empadronado==="s") {
+                          precio=60*0.6;
+                      }
+                  }
+
+                  alert("Billete sacado! el precio es: "+precio+" €");
+
+            </script>
+    </body>
+</html>
