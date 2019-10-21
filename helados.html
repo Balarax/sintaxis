@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>hello world</title>
+</head>
+
+<body>
+    <script>
+
+        var helado = window.prompt('¿Que helado quieres?\r\nhelado sin topping\r\ntopping de oreo\r\ntopping de kitkat\r\ntopping de brownie\r\ntopping de lacasitos');
+        var precio = 1.90;
+        var pfinal;
+
+        switch (helado) {
+            case "helado sin topping":
+                pfinal = 1.90;
+                break;
+
+            case "topping de oreo":
+                pfinal = precio + 1;
+                break;
+            case "topping de kitkat":
+                pfinal = precio + 1.50;
+                break;
+            case "topping de brownie":
+                pfinal = precio + 0.75;
+                break;
+            case "topping de lacasitos":
+                pfinal = precio + 0.95;
+                break;
+            default:
+                pfinal = null;
+                break;
+
+        }
+
+        if (pfinal == null) {
+            alert("Lo sentimos no tenemos ese tipo de helado");
+        } else {
+            alert("El precio del helado es: " + pfinal + " €");
+        }
+
+    </script>
+</body>
+
+</html>
