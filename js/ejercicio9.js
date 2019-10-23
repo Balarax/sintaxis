@@ -33,7 +33,7 @@ function imprimirfecha(){
   
 function rellenaranios() {
     var opciones="";
-  for (let i = 2019; i <= 2050; i++) {
+  for (let i = 1970; i <= 2019; i++) {
      opciones+=document.getElementById("anio").innerHTML = '<option value='+i+'>'+i+'</option>';
   }
 
