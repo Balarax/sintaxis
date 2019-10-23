@@ -13,6 +13,7 @@ function modificarfecha() {
     dias -= parseInt(operacion);
   }
 
+  
   fechaActual.setDate(dias);
 
   document.getElementById("demo").innerHTML = fechaActual;
