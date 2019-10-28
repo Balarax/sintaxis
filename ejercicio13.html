@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; utf-8">
+</head>
+
+<body>
+
+    <form name=f1 action="#" method="get">
+
+        Introduce un numero: <input type="text" name="text" id="numero"><br>
+
+    </form>
+
+
+    <button name="Insertar" onclick="IntroducirNumeros();" value="Introducir numeros">Procesar</button>
+
+    <br>
+
+    <p id="array"></p><br>
+
+    <script type="text/javascript">
+
+        function IntroducirNumeros() {
+            var numerosrepes = new Array();
+            var n = document.getElementById("numero").value;
+            if (!/^([0-9])*$/.test(n)) {
+                alert("El valor " + n + " no es un número entero");
+            }
+            else {
+                if (n == 0) {
+
+                    document.getElementById("array").innerHTML = numeros;
+
+                    repetidos();
+
+                } else {
+
+                    parseInt(n);
+                    numeros.push(n);
+                    document.getElementById("array").innerHTML = numeros;
+                    
+                    if (numeros.length == 5) {
+                        document.getElementById("array").innerHTML = numeros;
+                        repetidos();
+
+                    }
+                }
+
+            }
+        }
+
+        function repetidos() {
+            var indices = new Array(8); // colocar en vez de 8 el max del array "x"
+            indices.fill(0);
+            for (var i = 0; i < numeros.length; i++) {
+
+                for (var j = 0; j < x.length; j++) {
+                    if (i == x[j]) {
+                        indices[i] = indices[i] + 1;
+                    }
+                }
+            }
+            alert("Los numeros repes son: " + indices);
+        }
+
+        var numeros = new Array();
+
+
+    </script>
+
+
+</body>
+
+</html>
