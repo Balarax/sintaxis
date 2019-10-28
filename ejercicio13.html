@@ -33,17 +33,17 @@
 
                     document.getElementById("array").innerHTML = numeros;
 
-                    repetidos();
+                    isThereRepeted();
 
                 } else {
 
                     parseInt(n);
                     numeros.push(n);
                     document.getElementById("array").innerHTML = numeros;
-                    
+
                     if (numeros.length == 5) {
                         document.getElementById("array").innerHTML = numeros;
-                        repetidos();
+                        isThereRepeted();
 
                     }
                 }
@@ -51,20 +51,40 @@
             }
         }
 
-        function repetidos() {
-            var indices = new Array(8); // colocar en vez de 8 el max del array "x"
-            indices.fill(0);
-            for (var i = 0; i < numeros.length; i++) {
+        /*        function repetidos() {
+                   var indices = new Array(8); // colocar en vez de 8 el max del array "x"
+                   indices.fill(0);
+                   for (var i = 0; i < numeros.length; i++) {
+       
+                       for (var j = 0; j < x.length; j++) {
+                           if (i == x[j]) {
+                               indices[i] = indices[i] + 1;
+                           }
+                       }
+                   }
+                   alert("Los numeros repes son: " + indices);
+               } */
+        function isThereRepeted() {
+            var repeatedNumbers = []; //Array auxiliar para ir almacenando los repetidos.
 
-                for (var j = 0; j < x.length; j++) {
-                    if (i == x[j]) {
-                        indices[i] = indices[i] + 1;
+            for (let i = 0, j, isOnARRAY; i < numeros.length - 1; i++) {
+                isOnARRAY = false; //Variable que me permite salir antes del While si hay un repetido
+                j = i + 1; //Mirarmos repetidos a partir de los que ha hemos comprobado.
+                if (repeatedNumbers.indexOf(numeros[i]) === -1) { //Si el número ya está en los repetidos no hace falta buscarlos ni guardarlo
+                    while (j < numeros.length && isOnARRAY === false) { //Recorremos el array hasta que encontremos repetido o el final del array
+                        if (numeros[i] === numeros[j]) { // Si encontramos repetido se guarda y salimos del bucle.
+                            isOnARRAY = true;
+                            repeatedNumbers.push(numeros[i]);
+                        } else {
+                            j++;
+                        }
                     }
                 }
             }
-            alert("Los numeros repes son: " + indices);
-        }
+            alert("Los numeros repes son: " + repeatedNumbers);
+            //return (repeatedNumbers);
 
+        }
         var numeros = new Array();
 
 
