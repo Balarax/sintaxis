@@ -6,31 +6,59 @@
 </head>
 
 <body>
+    <p>- Dado un vector de enteros, comprobar el mayor, el menor y por último la media de todos.</p><br>
 
     <form name=f1 action="#" method="get">
 
         Introduce un numero: <input type="number" name="text" id="numero"><br>
 
-
-
-        <!--         Selecciona operacion: <select name="select" id="r1">
-            <option value=1>Mayor</option>
-            <option value=2>Menor</option>
-            <option value=3>Media</option>
-        </select> -->
-
-        <input type=button name="Insertar" onclick="IntroducirNumeros();reset()" name="Introducirnumeros"
-            value="Introducir numeros"> <br>
-        <input type=button name="Resultado" onclick="CalcularMayor();CalcularMenor();CalcularMedia();"
-            name="Calcular mayor,menor y media" value="Calcular mayor,menor y media"><br>
-
     </form>
+
+
+    <button name="Insertar" onclick="IntroducirNumeros()" value="Introducir numeros">Introducir numeros</button> <br>
+
+    <button name="Resultado" onclick="CalcularMayor();CalcularMenor();CalcularMedia();"
+        name="Calcular mayor,menor y media" value="Calcular mayor,menor y media">Calcular</button> <br>
+
 
     <p id="array"></p><br>
     <p id="info"></p><br>
     <p id="mayor"></p><br>
     <p id="menor"></p><br>
     <p id="media"></p><br>
+
+    <p>- Concatenar dos arrays A y B de la siguiente forma: A0, B0, A1, B1, A2, B2, …, An, Bn. Los vectores tendrán la
+        misma longitud.(Hecho tambien - El mismo ejercicio anterior con array de diferentes longitudes.)</p><br>
+
+    <form name=f2 action="#" method="get">
+
+        Introduce un caracter arrayA: <input type="text" name="text" id="caractera"><br>
+        Introduce un caracter arrayB: <input type="text" name="text" id="caracterb"><br>
+
+    </form>
+
+    <button name="Insertar" onclick="IntroducirCaracteresA()" value="Introducir caracteres">Introducir
+        caracteres - A</button> <br>
+    <button name="Insertar" onclick="IntroducirCaracteresB()" value="Introducir caracteres">Introducir
+        caracteres - B</button> <br>
+
+    <button name="Insertar" onclick="Concatenar()" value="Introducir caracteres">Concatenar</button> <br>
+
+    <p id="caracteresa"></p><br>
+    <p id="caracteresb"></p><br>
+    <p id="concatenar"></p><br>
+
+    <p>- Dado un vector de enteros, introducir un nuevo elemento en la posición seleccionada.</p><br>
+
+    <p id="vector"></p><br>
+
+    Introduce un elemento: <input type="text" name="text" id="elemento"><br>
+    En la posicion seleccinada: <input type="number" name="text" id="posicion"><br>
+
+    <button name="Insertar" onclick="IntroducirElementosarray()" value="Introducir caracteres">Introducir elemento
+        array</button> <br>
+
+    <p id="vectormod"></p><br>
 
     <script type="text/javascript">
 
@@ -41,6 +69,28 @@
             numeros.push(n);
             document.getElementById("array").innerHTML = numeros;
         }
+
+        function IntroducirCaracteresA() {
+            var c = document.getElementById("caractera").value;
+            caracteresa.push(c);
+            document.getElementById("caracteresa").innerHTML = caracteresa;
+        }
+        function IntroducirCaracteresB() {
+            var c = document.getElementById("caracterb").value;
+            caracteresb.push(c);
+            document.getElementById("caracteresb").innerHTML = caracteresb;
+        }
+
+        function IntroducirElementosarray() {
+
+            var e = document.getElementById("elemento").value;
+            var p = document.getElementById("posicion").value;
+
+            vector.splice(p, 0, e);
+            document.getElementById("vectormod").innerHTML = vector;
+
+        }
+
 
         function CalcularMayor() {
 
@@ -97,8 +147,47 @@
 
         }
 
-        var numeros = new Array();
+        function Concatenar() {
 
+            var resultado = new Array();
+
+            for (let i = 0, k = 0; i < caracteresa.length + caracteresb.length; i = i + 2, k++) {
+
+                resultado[i] = caracteresa[k];
+                resultado[i + 1] = caracteresb[k];
+
+
+            }
+            //resultado = resultado.filter(resultado => resultado.length >= 1)
+
+            document.getElementById("concatenar").innerHTML = resultado;
+
+
+        }
+
+        function burbuja(miArray)
+	{
+		for(var i=1;i<miArray.length;i++)
+		{
+			for(var j=0;j<(miArray.length-i);j++)
+			{
+				if(miArray[j]>miArray[j+1])
+				{
+					k=miArray[j+1];
+					miArray[j+1]=miArray[j];
+					miArray[j]=k;
+				}
+			}
+		}
+		return miArray;
+    }
+    
+        var numeros = new Array();
+        var caracteresa = new Array();
+        var caracteresb = new Array();
+        var vector = [1, 2, 3];
+
+        document.getElementById("vector").innerHTML = vector;
 
 
     </script>
