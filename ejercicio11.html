@@ -97,14 +97,13 @@
             if (numeros.length <= 0) {
                 document.getElementById("info").innerHTML = "El array esta vacío";
             } else {
-                var mayor = numeros[0];
+                var res = new Array();
+                
 
-                for (let i = 0; i < numeros.length; i++) {
-                    if (numeros[i] > mayor) {
-                        mayor = numeros[i];
-                    }
+                res=numeros.sort();
 
-                }
+                var mayor = res[numeros.length-1];
+
 
                 document.getElementById("mayor").innerHTML = "El numero mayor es: " + mayor;
             }
@@ -116,14 +115,12 @@
             if (numeros.length <= 0) {
                 document.getElementById("info").innerHTML = "El array esta vacío";
             } else {
-                var menor = numeros[0];
+                var res = new Array();
 
-                for (let i = 0; i < numeros.length; i++) {
-                    if (numeros[i] < menor) {
-                        menor = numeros[i];
-                    }
+                res=numeros.sort();
 
-                }
+                var menor = res[0];
+
 
                 document.getElementById("menor").innerHTML = "El numero menor es: " + menor;
             }
