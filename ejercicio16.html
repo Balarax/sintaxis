@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; utf-8">
+</head>
+
+<body>
+
+    <form name=f1 action="#" method="get">
+
+        Descripcion: <input type="text" name="text" id="caso1"><br>
+        <p id="caso1r"></p>
+        Telefono: <input type="text" name="text" id="caso2"><br>
+        <p id="caso2r"></p>
+        Introduce una cadena: <input type="text" name="text" id="caso3"><br>
+        <p id="caso3r"></p>
+        Introduce una cadena: <input type="text" name="text" id="caso4"><br>
+        <p id="caso4r"></p>
+        Introduce una cadena: <input type="text" name="text" id="caso5"><br>
+        <p id="caso5r"></p>
+        Introduce una cadena: <input type="text" name="text" id="caso6"><br>
+        <p id="caso6r"></p>
+        Introduce una cadena: <input type="text" name="text" id="caso7"><br>
+        <p id="caso7r"></p>
+        Introduce una cadena: <input type="text" name="text" id="caso8"><br>
+        <p id="caso8r"></p>
+        Introduce una cadena: <input type="text" name="text" id="caso9"><br>
+        <p id="caso9r"></p>
+        Introduce una cadena: <input type="text" name="text" id="caso10"><br>
+        <p id="caso10r"></p>
+        Introduce una cadena: <input type="text" name="text" id="caso11"><br>
+        <p id="caso11r"></p>
+
+
+    </form>
+
+
+    <button name="Validar" onclick="Descripcion();Telefono();TelefonoInternacional();" value="Validar">Validar</button>
+
+    <br>
+
+    <p id="pila"></p><br>
+
+    <script type="text/javascript">
+
+        function Descripcion() {
+            var str = document.getElementById("caso1").value;
+
+            var valida = str.match(/^[A-Z].*\.$/);
+
+            if (valida) {
+                var str1 = "Es válida";
+                document.getElementById("caso1r").innerHTML = str1;
+            } else {
+                var str1 = "No es válida";
+                document.getElementById("caso1r").innerHTML = str1;
+            }
+        }
+
+        function Telefono() {
+            var str = document.getElementById("caso2").value;
+
+            var valida = str.match(/^9[0-9]{8}$/);
+
+            if (valida) {
+                var str1 = "Es válida";
+                document.getElementById("caso2r").innerHTML = str1;
+            } else {
+                var str1 = "No es válida";
+                document.getElementById("caso2r").innerHTML = str1;
+            }
+        }
+        function TelefonoInternacional() {
+            var str = document.getElementById("caso3").value;
+
+            var valida = str.match(/^\(\+34\)9[0-9]{8}$)/);
+
+            if (valida) {
+                var str1 = "Es válida";
+                document.getElementById("caso3r").innerHTML = str1;
+            } else {
+                var str1 = "No es válida";
+                document.getElementById("caso3r").innerHTML = str1;
+            }
+
+        }
+
+        function FechaIncidencia() {
+            var str = document.getElementById("caso4").value;
+
+            var valida = str.match(/^\d{1,2}\/\d{1,2}\/\d{2,4}\ \d{1,2}\:\d{1,2}$/);
+
+            if (valida) {
+                var str1 = "Es válida";
+                document.getElementById("caso4r").innerHTML = str1;
+            } else {
+                var str1 = "No es válida";
+                document.getElementById("caso4r").innerHTML = str1;
+            }
+
+        }
+
+        function CodigoPostal() {
+            var str = document.getElementById("caso5").value;
+
+            var valida = str.match(/^\d{5}$/);
+
+            if (valida) {
+                var str1 = "Es válida";
+                document.getElementById("caso5r").innerHTML = str1;
+            } else {
+                var str1 = "No es válida";
+                document.getElementById("caso5r").innerHTML = str1;
+            }
+
+        }
+
+        function CorreoElectronico() {
+            var str = document.getElementById("caso6").value;
+
+            var valida = str.match(/^.\@.\..$/);
+
+            if (valida) {
+                var str1 = "Es válida";
+                document.getElementById("caso6r").innerHTML = str1;
+            } else {
+                var str1 = "No es válida";
+                document.getElementById("caso6r").innerHTML = str1;
+            }
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
