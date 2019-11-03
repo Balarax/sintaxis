@@ -18,7 +18,8 @@
             for (let k = 0; k < 10; k++) {
 
                 if (k == 9) {
-                    for (let j = 0; j < 10; j++) {
+                    n[9] = 0;
+                    for (let j = 0; j < 9; j++) {
                         n[9] += n[j];
                     }
 
@@ -26,7 +27,7 @@
 
                 } else {
 
-                    n[k] = Math.floor(Math.random() * 100);
+                    n.push(n[k] = Math.floor(Math.random() * 100));
                     document.write(n[k] + " ");
                 }
 
