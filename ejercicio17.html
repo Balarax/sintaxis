@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; utf-8">
+</head>
+
+<body>
+
+    <br>
+
+    <script type="text/javascript">
+
+
+        n = new Array();
+
+        for (let i = 0; i < 10; i++) {
+            for (let k = 0; k < 10; k++) {
+
+                if (k == 9) {
+                    for (let j = 0; j < 10; j++) {
+                        n[9] += n[j];
+                    }
+
+                    document.write(n[9] + " ");
+
+                } else {
+
+                    n[k] = Math.floor(Math.random() * 100);
+                    document.write(n[k] + " ");
+                }
+
+            }
+
+            document.write("<br>");
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
