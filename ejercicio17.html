@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<p>Selecciona una longitud: </p>
+    <p>Selecciona una long: </p>
     <select name="selec" id="select">
         <option>2</option>
         <option>3</option>
@@ -18,45 +18,51 @@
         <option>9</option>
         <option>10</option>
     </select>
-<br>
-<br>
-    <button type="button" onclick="matriz();" name="Calcular" >Calcular</button>
-<br>
+    <br>
+    <br>
+    <button type="button" onclick="matriz();" name="Calcular">Calcular</button>
+    <br>
 
 
     <br>
 
     <script type="text/javascript">
 
-function matriz() {
-    
+        function matriz() {
 
-var longitud = document.getElementById("select").value;
-        n = new Array(longitud);
 
-        for (let i = 0; i < longitud; i++) {
-            for (let k = 0; k < longitud; k++) {
+            var long = document.getElementById("select").value;
 
-                if (k == longitud-1) {
-                    n[longitud-1] = 0;
-                    for (let j = 0; j < longitud-1; j++) {
-                        n[longitud-1] += n[j];
+            n = new Array();
+
+            for (let i = 0; i < long; i++) {
+
+                n[i] = new Array(long);
+
+                console.log(n[i]);
+
+                for (let k = 0; k < long; k++) {
+
+                    if (k == long - 1) {
+                        n[i][long - 1] = 0;
+                        for (let j = 0; j < long - 1; j++) {
+                            n[i][long - 1] += n[i][j];
+                        }
+
+                        document.write(n[i][long - 1] + " ");
+
+                    } else {
+
+                        n.push(n[i][k] = Math.floor(Math.random() * 100));
+                        document.write(n[i][k] + " ");
                     }
 
-                    document.write(n[n.length-1] + " ");
-
-                } else {
-
-                    n.push(n[k] = Math.floor(Math.random() * 100));
-                    document.write(n[k] + " ");
                 }
 
+                document.write("<br>");
             }
 
-            document.write("<br>");
         }
-
-    }
 
     </script>
 
