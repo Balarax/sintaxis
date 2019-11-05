@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; utf-8">
+</head>
+
+<body>
+    <form name=f1 action="#" method="get">
+
+        Introduce un texto: <br><textarea name="textarea" rows="10" cols="50" id="str"></textarea><br>
+        Introduce valor a reemplazar: <input type="text" name="palabra" id="r1"><br>
+        Introduce valor por el que se reemplaza: <input type="text" name="palabra" id="r2"><br>
+
+    </form>
+
+
+    <button name="Insertar" onclick="IntroducirArray();" value="Introducir numeros">Procesar</button> <br>
+
+</body>
+
+<script type="text/javascript">
+
+
+    function IntroducirArray() {
+        var str = document.getElementById("str").value;
+        var r1 = document.getElementById("r1").value;
+        var r2 = document.getElementById("r2").value;
+
+        res = str.split(" ");
+
+
+            var r1 = res.indexOf(r1);
+            res[r1] = r2;
+
+
+        strres = res.join(" ");
+
+
+        document.getElementById("str").value = strres;
+    }
+
+    function reemplazo() {
+        var str = document.getElementById("str").value;
+        var r1 = document.getElementById("r1").value;
+        var r2 = document.getElementById("r2").value;
+
+        var cad="";
+
+        cadconv= str.replace(r1,r2);
+
+        
+        document.getElementById("str").value = cadconv;
+
+    }
+
+
+</script>
+
+</html>
