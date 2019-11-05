@@ -15,7 +15,7 @@
     </form>
 
 
-    <button name="Insertar" onclick="IntroducirArray();" value="Introducir numeros">Procesar</button> <br>
+    <button name="Insertar" onclick="reemplazo();" value="Introducir numeros">Procesar</button> <br>
 
 </body>
 
@@ -47,10 +47,11 @@
 
         var cad="";
 
-        cadconv= str.replace(r1,r2);
+        var reg = new RegExp(r1,"g");
 
-        
-        document.getElementById("str").value = cadconv;
+        cad = str.replace(reg,r2);
+
+        document.getElementById("str").value = cad;
 
     }
 
