@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="js/carrito.js"></script>
+        <title>Carrito de la compra</title>
+    </head>
+
+    <body>
+        <h1>Carrito de la compra</h1>
+        
+        <p>Introduce el nombre de tu articulo
+        <input type="text" id="nombre"></p>
+        <p>Introduce el precio de tu articulo
+            <input type="number" id="precio"></p>
+
+
+        <button type="button" onclick="Anadir(document.getElementById('precio').value)">Comprar</button>
+
+        <p id="mainScreen"></p><br>
+
+
+    </body>
+</html>
