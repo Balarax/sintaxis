@@ -18,9 +18,14 @@
             <input type="number" id="precio"></p>
 
 
-        <button type="button" onclick="Anadir(document.getElementById('precio').value)">Comprar</button>
+        <button type="button" onclick="Anadir(document.getElementById('precio').value,document.getElementById('nombre').value);">Añadir articulo</button>
+        <button type="button" onclick="MostrarCarrito();">Mostrar Carrito</button>
+        <button type="button" onclick="EliminarArticulo();">Eliminar Articulo</button>
 
-        <p id="mainScreen"></p><br>
+        <p id="mainScreen"></p>
+        <br>
+        <br>
+        <p id="mostrarcarrito"></p>
 
 
     </body>
