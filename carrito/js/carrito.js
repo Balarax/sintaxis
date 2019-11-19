@@ -53,11 +53,11 @@ function MostrarCarrito() {
 
 function EliminarArticulo() {
 
-	for ( i in carritocompra.listararticulos) {
+	for (let i in carritocompra.listararticulos) {
 
 		if (document.getElementById(i).checked) {
 
-			preciores = carritocompra.listararticulos[Object.values(i)] //conseguimos los valores del objeto que se encuentra en la posicion i
+			var preciores = carritocompra.listararticulos[Object.values(i)] //conseguimos los valores del objeto que se encuentra en la posicion i
 
 			console.log(preciores.precio);
 			carritocompra.unidades -= 1;
