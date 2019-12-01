@@ -11,17 +11,24 @@
 
     <body>
         <h1>Carrito de la compra</h1>
-        
-        <p>Introduce el nombre de tu articulo
-        <input type="text" id="nombre"></p>
-        <p>Introduce el precio de tu articulo
-            <input type="number" id="precio"></p>
 
+        <p>Seleccione un producto:</p>
+        <select name="Selector" id="Selector" onchange="GenerarCampos();">
+            <option value="" selected></option> 
+            <option value="Camiseta">Camiseta</option>
+            <option value="Pantalon">Pantalon</option>
+            <option value="Zapatilla">Zapatilla</option>
+            <option value="Producto">Otro Producto</option> 
+        </select>
 
-        <button type="button" onclick="Anadir(document.getElementById('precio').value,document.getElementById('nombre').value);">Añadir articulo</button>
+        <p id="MostrarCampos"></p>
+
+         <button type="button" onclick="ValidarCampos();">Añadir articulo</button> 
         <button type="button" onclick="MostrarCarrito();">Mostrar Carrito</button>
         <button type="button" onclick="EliminarArticulo();">Eliminar Articulo</button>
-        <button type="button" onclick="testExercise();">TEST</button>
+        <!-- <button type="button" onclick="testExercise();">TEST</button> -->
+
+        <p id="ControlDeErrores"></p>
 
         <p id="mainScreen"></p>
         <br>
