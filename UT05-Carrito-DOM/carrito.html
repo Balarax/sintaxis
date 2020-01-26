@@ -42,14 +42,17 @@
                         <a href="#" onclick="GenerarCampos('Zapatilla');">Zapatilla</a>
 
                         <a href="#" onclick="GenerarCampos('Producto');">Otro Producto</a>
+                        
+                        <input id="Selector" type="hidden">
+
                     </div>
                 </li>
 
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"> Eliminar <span
                             class="caret"></span></a>
                     <div class="dropdown-content">
-                        <a href="#"> Eliminar ultimo producto añadido</a>
-                        <a href="#">Eliminar todos los productos</a>
+                        <a href="#" onclick="EliminarArticulo(1);"> Eliminar ultimo producto añadido</a>
+                        <a href="#" onclick="EliminarArticulo(2);">Eliminar todos los productos</a>
 
                     </div>
                 </li>
@@ -59,10 +62,6 @@
     </nav>
 
     <p id="MostrarCampos"></p>
-
-    <button type="button" onclick="ValidarCampos();">Confirmar</button>
-    <button type="button" onclick="EliminarArticulo();">Eliminar Articulo</button>
-    <!-- <button type="button" onclick="testExercise();">TEST</button> -->
 
     <p id="ControlDeErrores"></p>
 

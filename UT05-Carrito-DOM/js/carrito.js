@@ -166,42 +166,26 @@ class Zapatilla extends Producto {
 
 var carritocompra = new Carrito(1, [], []);
 
-function Anadir(precio, nombre) {
-
-	precio = parseInt(precio);
-
-	var Article = new Articulo;
-	Article.nombre = nombre;
-	Article.precio = precio;
-
-	carritocompra.listararticulos.push(Article);
-
-	carritocompra.unidades += 1;
-	carritocompra.precio += precio;
-
-	document.getElementById('mainScreen').innerHTML = "Unidades: " + carritocompra.unidades + "<br>Precio: " + carritocompra.precio + " €";
-	document.getElementById('mostrarcarrito').innerHTML = "";
-
-}
-
 /*
 Funcion para validar los campos Y AÑADIR LOS ARTICULOS
+Esta funcion esta diseñada para que se ejecute de dos maneras:
+-Con un evento blur, para que se verifiquen en tiempo real los campos pero sin llamar a la funcion anadir() (debemos pasarle el parametro 1)
+-Con un evento clic(normalmente asociado a un boton), que este si añadirá los articulos.
 @version 1.0
 */
 
-function ValidarCampos() {
+function ValidarCampos(modo) {
 
 	var tipo = document.getElementById('Selector').value;
+	var div = document.getElementById("ControlDeErrores");
 
+	console.log(tipo);
 	switch (tipo) {
 		case 'Camiseta':
 			var num_serie = document.getElementById('Num_serie').value;
 			var nombre = document.getElementById('Nombre').value;
-			var precio = document.getElementById('Precio').value;
 			//var iva = document.getElementById('Iva').value;
-			var talla = document.getElementById('Talla').value;
-			var color = document.getElementById('Color').value;
-			var cantidad = document.getElementById('Cantidad').value;
+			var talla = document.getElementById('Talla').value.toUpperCase();
 
 
 			try {
@@ -213,6 +197,9 @@ function ValidarCampos() {
 				if (num_serie == "") {
 					throw "ERROR, el numero de serie es un campo OBLIGATORIO y no puede estar vacío";
 				}
+				if (!num_serie.match(re)) {
+					throw "ERROR, el numero de serie debe contener 8 digitos";
+				}
 
 				if (nombre == "") {
 					throw "ERROR, el nombre es un campo OBLIGATORIO y no puede estar vacío";
@@ -220,10 +207,6 @@ function ValidarCampos() {
 
 				if (talla == "") {
 					throw "ERROR, la talla es un campo OBLIGATORIO y no puede estar vacío";
-				}
-
-				if (!num_serie.match(re)) {
-					throw "ERROR, el numero de serie debe contener 8 digitos";
 				}
 
 				// if (iva != 10) {
@@ -234,32 +217,15 @@ function ValidarCampos() {
 				}
 
 			} catch (error) {
-				document.getElementById('ControlDeErrores').style.color = "red";
-				document.getElementById('ControlDeErrores').innerHTML = error;
+				div.innerHTML = "";
+				div.style.color = "red";
+				div.appendChild(document.createTextNode(error));
 				break;
 			}
-
-			if (precio == "") {
-				precio = 0;
+			div.innerHTML = "";
+			if (modo == 1) {
+				Anadir("Camiseta", 1);
 			}
-			if (cantidad == "") {
-				cantidad = 1;
-			}
-
-			var Article = new Camiseta;
-			Article.num_serie = num_serie;
-			Article.nombre = nombre;
-			Article.iva = 10;
-			Article.precio = precio;
-			Article.talla = talla;
-			Article.color = color;
-
-			carritocompra.items.push(Article);
-			carritocompra.cantidades.push(cantidad);
-
-			document.getElementById('ControlDeErrores').style.color = "green";
-			document.getElementById('ControlDeErrores').innerHTML = "Articulo Añadido correctamente";
-
 
 			break;
 
@@ -269,11 +235,10 @@ function ValidarCampos() {
 			var nombre = document.getElementById('Nombre').value;
 			var precio = document.getElementById('Precio').value;
 			// var iva = document.getElementById('Iva').value;
-			var talla = document.getElementById('Talla').value;
-			var color = document.getElementById('Color').value;
+			var talla = document.getElementById('Talla').value.toUpperCase();
 			var ancho = document.getElementById('Ancho').value;
 			var largo = document.getElementById('Largo').value;
-			var cantidad = document.getElementById('Cantidad').value;
+
 
 			try {
 				var re = new RegExp('^\\d{8}$');
@@ -289,16 +254,17 @@ function ValidarCampos() {
 					throw "ERROR, el numero de serie es un campo OBLIGATORIO y no puede estar vacío";
 				}
 
+
+				if (!num_serie.match(re)) {
+					throw "ERROR, el numero de serie debe contener 8 digitos";
+				}
+
 				if (nombre == "") {
 					throw "ERROR, el nombre es un campo OBLIGATORIO y no puede estar vacío";
 				}
 
 				if (talla == "") {
 					throw "ERROR, la talla es un campo OBLIGATORIO y no puede estar vacío";
-				}
-
-				if (!num_serie.match(re)) {
-					throw "ERROR, el numero de serie debe contener 8 digitos";
 				}
 
 				// if (iva!=10) {
@@ -324,50 +290,25 @@ function ValidarCampos() {
 				}
 
 			} catch (error) {
-				document.getElementById('ControlDeErrores').style.color = "red";
-				document.getElementById('ControlDeErrores').innerHTML = error;
+				div.innerHTML = "";
+				div.style.color = "red";
+				div.appendChild(document.createTextNode(error));
 				break;
 			}
-
-			if (precio == "") {
-				precio = 0;
+			div.innerHTML = "";
+			if (modo == 1) {
+				Anadir("Pantalon", 1);
 			}
-			if (ancho == "") {
-				ancho = 0;
-			}
-			if (largo == "") {
-				largo = 0;
-			}
-			if (cantidad == "") {
-				cantidad = 1;
-			}
-
-			var Article = new Pantalon;
-			Article.num_serie = num_serie;
-			Article.nombre = nombre;
-			Article.iva = 10;
-			Article.precio = precio;
-			Article.talla = talla;
-			Article.color = color;
-			Article.ancho = ancho;
-			Article.largo = largo;
-
-			carritocompra.items.push(Article);
-			carritocompra.cantidades.push(cantidad);
-
-			document.getElementById('ControlDeErrores').style.color = "green";
-			document.getElementById('ControlDeErrores').innerHTML = "Articulo Añadido correctamente";
 
 			break;
 
 		case 'Zapatilla':
 			var num_serie = document.getElementById('Num_serie').value;
 			var nombre = document.getElementById('Nombre').value;
-			var precio = document.getElementById('Precio').value;
 			// var iva = document.getElementById('Iva').value;
 			var numero = document.getElementById('Numero').value;
-			var tipo = document.getElementById('Tipo').value;
-			var cantidad = document.getElementById('Cantidad').value;
+			var tipo = document.getElementById('Tipo').value.toUpperCase();
+
 
 			try {
 				var re = new RegExp('^\\d{8}$');
@@ -380,6 +321,9 @@ function ValidarCampos() {
 				if (num_serie == "") {
 					throw "ERROR, el numero de serie es un campo OBLIGATORIO y no puede estar vacío";
 				}
+				if (!num_serie.match(re)) {
+					throw "ERROR, el numero de serie debe contener 8 digitos";
+				}
 
 				if (nombre == "") {
 					throw "ERROR, el nombre es un campo OBLIGATORIO y no puede estar vacío";
@@ -388,63 +332,40 @@ function ValidarCampos() {
 				if (numero == "") {
 					throw "ERROR, el numero es un campo OBLIGATORIO y no puede estar vacío";
 				}
+				if (!numero.match(re2)) {
+					throw "ERROR, el numero debe ser un numero y estar entre 16 y 48";
+				}
 
 				if (tipo == "") {
 					throw "ERROR, el tipo es un campo OBLIGATORIO y no puede estar vacío";
-				}
-
-				if (!num_serie.match(re)) {
-					throw "ERROR, el numero de serie debe contener 8 digitos";
 				}
 
 				// if (iva!=10) {
 				// 	throw "ERROR, el iva para este articulo solo puede ser 10%";
 				// }
 
-
-				if (!numero.match(re2)) {
-					throw "ERROR, el numero debe ser un numero y estar entre 16 y 48";
-				}
-
 				if (!tipo.match(re1)) {
 					throw "ERROR, los tipos disponibles son: EU | USA | UK | CM ";
 				}
 
 			} catch (error) {
-				document.getElementById('ControlDeErrores').style.color = "red";
-				document.getElementById('ControlDeErrores').innerHTML = error;
+				div.innerHTML = "";
+				div.style.color = "red";
+				div.appendChild(document.createTextNode(error));
 				break;
 			}
-
-			if (precio == "") {
-				precio = 0;
-			}
-			if (cantidad == "") {
-				cantidad = 1;
+			div.innerHTML = "";
+			if (modo == 1) {
+				Anadir("Zapatilla", 1);
 			}
 
-			var Article = new Zapatilla;
-			Article.num_serie = num_serie;
-			Article.nombre = nombre;
-			Article.iva = 4;
-			Article.precio = precio;
-			Article.numero = numero;
-			Article.tipo = tipo;
-
-			carritocompra.items.push(Article);
-			carritocompra.cantidades.push(cantidad);
-
-			document.getElementById('ControlDeErrores').style.color = "green";
-			document.getElementById('ControlDeErrores').innerHTML = "Articulo Añadido correctamente";
 			break;
 
 		case 'Producto':
 
 			var num_serie = document.getElementById('Num_serie').value;
 			var nombre = document.getElementById('Nombre').value;
-			var precio = document.getElementById('Precio').value;
 			var iva = document.getElementById('Iva').value;
-			var cantidad = document.getElementById('Cantidad').value;
 
 			try {
 				var re = new RegExp('^\\d{8}$');
@@ -456,109 +377,280 @@ function ValidarCampos() {
 					throw "ERROR, el numero de serie es un campo OBLIGATORIO y no puede estar vacío";
 				}
 
+				if (!num_serie.match(re)) {
+					throw "ERROR, el numero de serie debe contener 8 digitos";
+				}
+
 				if (nombre == "") {
 					throw "ERROR, el nombre es un campo OBLIGATORIO y no puede estar vacío";
 				}
 
-				if (!num_serie.match(re)) {
-					throw "ERROR, el numero de serie debe contener 8 digitos";
-				}
 				if (iva != "") {
-
 					if (!iva.match(re1)) {
 						throw "ERROR, el iva no puede ser superior al 21%";
 					}
 				}
 
-
 			} catch (error) {
-				document.getElementById('ControlDeErrores').style.color = "red";
-				document.getElementById('ControlDeErrores').innerHTML = error;
+				div.innerHTML = "";
+				div.style.color = "red";
+				div.appendChild(document.createTextNode(error));
 				break;
 			}
-
-			if (precio == "") {
-				precio = 0;
+			div.innerHTML = "";
+			if (modo == 1) {
+				Anadir("Producto", 1);
 			}
-
-			if (iva == "") {
-				iva = 0;
-			}
-
-			if (cantidad == "") {
-				cantidad = 1;
-			}
-
-			var Article = new Producto;
-			Article.num_serie = num_serie;
-			Article.nombre = nombre;
-			Article.iva = iva;
-			Article.precio = precio;
-
-			carritocompra.items.push(Article);
-			carritocompra.cantidades.push(cantidad);
-
-			document.getElementById('ControlDeErrores').style.color = "green";
-			document.getElementById('ControlDeErrores').innerHTML = "Articulo Añadido correctamente";
-
-			break;
-
-		default:
-
-			pintar += "<h4> Por favor, seleccione un articulo </h4>";
 
 			break;
 	}
 
 }
 
+
+function Anadir(producto, confirmacion) {
+
+	var div = document.getElementById("ControlDeErrores");
+
+	switch (producto) {
+		case 'Camiseta':
+			if (confirmacion == 1) {
+				var num_serie = document.getElementById('Num_serie').value;
+				var nombre = document.getElementById('Nombre').value;
+				var precio = document.getElementById('Precio').value;
+				var talla = document.getElementById('Talla').value.toUpperCase();
+				var color = document.getElementById('Color').value;
+				var cantidad = document.getElementById('Cantidad').value;
+
+				if (precio == "") {
+					precio = 0;
+				}
+				if (cantidad == "") {
+					cantidad = 1;
+				}
+
+				var Article = new Camiseta;
+				Article.num_serie = num_serie;
+				Article.nombre = nombre;
+				Article.iva = 10;
+				Article.precio = precio;
+				Article.talla = talla;
+				Article.color = color;
+
+				carritocompra.items.push(Article);
+				carritocompra.cantidades.push(cantidad);
+
+				div.innerHTML = "";
+				div.style.color = "green";
+				div.appendChild(document.createTextNode("Articulo Añadido correctamente"));
+
+			} else {
+				div.innerHTML = "";
+				div.style.color = "red";
+				div.appendChild(document.createTextNode("Ha ocurrido un error inesperado, no se ha podido añadir su producto"));
+			}
+			break;
+		case 'Pantalon':
+			if (confirmacion == 1) {
+				var num_serie = document.getElementById('Num_serie').value;
+				var nombre = document.getElementById('Nombre').value;
+				var precio = document.getElementById('Precio').value;
+				// var iva = document.getElementById('Iva').value;
+				var talla = document.getElementById('Talla').value.toUpperCase();
+				var color = document.getElementById('Color').value;
+				var ancho = document.getElementById('Ancho').value;
+				var largo = document.getElementById('Largo').value;
+				var cantidad = document.getElementById('Cantidad').value;
+
+				if (precio == "") {
+					precio = 0;
+				}
+				if (ancho == "") {
+					ancho = 0;
+				}
+				if (largo == "") {
+					largo = 0;
+				}
+				if (cantidad == "") {
+					cantidad = 1;
+				}
+
+				var Article = new Pantalon;
+				Article.num_serie = num_serie;
+				Article.nombre = nombre;
+				Article.iva = 10;
+				Article.precio = precio;
+				Article.talla = talla;
+				Article.color = color;
+				Article.ancho = ancho;
+				Article.largo = largo;
+
+				carritocompra.items.push(Article);
+				carritocompra.cantidades.push(cantidad);
+
+				div.innerHTML = "";
+				div.style.color = "green";
+				div.appendChild(document.createTextNode("Articulo Añadido correctamente"));
+
+			} else {
+				div.innerHTML = "";
+				div.style.color = "red";
+				div.appendChild(document.createTextNode("Ha ocurrido un error inesperado, no se ha podido añadir su producto"));
+			}
+			break;
+		case 'Zapatilla':
+			if (confirmacion == 1) {
+				var num_serie = document.getElementById('Num_serie').value;
+				var nombre = document.getElementById('Nombre').value;
+				var precio = document.getElementById('Precio').value;
+				// var iva = document.getElementById('Iva').value;
+				var numero = document.getElementById('Numero').value;
+				var tipo = document.getElementById('Tipo').value.toUpperCase();
+				var cantidad = document.getElementById('Cantidad').value;
+
+				if (precio == "") {
+					precio = 0;
+				}
+				if (cantidad == "") {
+					cantidad = 1;
+				}
+
+				var Article = new Zapatilla;
+				Article.num_serie = num_serie;
+				Article.nombre = nombre;
+				Article.iva = 4;
+				Article.precio = precio;
+				Article.numero = numero;
+				Article.tipo = tipo;
+
+				carritocompra.items.push(Article);
+				carritocompra.cantidades.push(cantidad);
+
+				document.getElementById('ControlDeErrores').style.color = "green";
+				document.getElementById('ControlDeErrores').innerHTML = "Articulo Añadido correctamente";
+
+			} else {
+				div.innerHTML = "";
+				div.style.color = "red";
+				div.appendChild(document.createTextNode("Ha ocurrido un error inesperado, no se ha podido añadir su producto"));
+			}
+			break;
+		case 'Producto':
+
+			if (confirmacion == 1) {
+
+				var num_serie = document.getElementById('Num_serie').value;
+				var nombre = document.getElementById('Nombre').value;
+				var precio = document.getElementById('Precio').value;
+				var iva = document.getElementById('Iva').value;
+				var cantidad = document.getElementById('Cantidad').value;
+
+				if (precio == "") {
+					precio = 0;
+				}
+
+				if (iva == "") {
+					iva = 0;
+				}
+
+				if (cantidad == "") {
+					cantidad = 1;
+				}
+
+				var Article = new Producto;
+				Article.num_serie = num_serie;
+				Article.nombre = nombre;
+				Article.iva = iva;
+				Article.precio = precio;
+
+				carritocompra.items.push(Article);
+				carritocompra.cantidades.push(cantidad);
+
+				div.innerHTML = "";
+				div.style.color = "green";
+				div.appendChild(document.createTextNode("Articulo Añadido correctamente"));
+
+			} else {
+				div.innerHTML = "";
+				div.style.color = "red";
+				div.appendChild(document.createTextNode("Ha ocurrido un error inesperado, no se ha podido añadir su producto"));
+			}
+			break;
+	}
+
+}
+
+
 /*
 Funcion que genera la interfaz según lo que hayamos elegido en el desplegable
-@version 1.0
+@version 2.0
 */
 function GenerarCampos(tipo) {
 
 	var div = document.getElementById('MostrarCampos');
+	var Selector = document.getElementById('Selector'); //Esto servirá para meter el tipo de objeto en este campo oculto para luego mandarle la informacion a la funcion validar
+
+	var confirmbutton = document.createElement("button");
+	confirmbutton.setAttribute("class", "btn btn-secondary"); //Atributo para mejorar apariencia con boostrap
+	confirmbutton.appendChild(document.createTextNode("Confirmar"));
+	confirmbutton.addEventListener("click", function () {  //Importantisimo, en el boton, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 1" para que añada articulos
+		ValidarCampos(1);
+	});
 
 	campos = new Array();
 	switch (tipo) {
 		case 'Camiseta':
+			div.innerHTML = "";
+			Selector.value = "";
+			Selector.value = "Camiseta";
+
+
+			var paragraph = document.createElement("p");
+			paragraph.appendChild(document.createTextNode("Has seleccionado camiseta, por favor, introduce los datos del producto: "));
+			div.appendChild(paragraph);
+
 			for (let i = 0; i < 6; i++) {  //IMPORTANTE, EL LIMITE DE LA VARIABLE i SERAN EL TOTAL DE CAMPOS QUE TENDRÁ QUE GENERAR
 
 				var paragraph = document.createElement("p");
 
 				var inputtext = document.createElement("input");
 				inputtext.setAttribute("type", "text");
+				inputtext.addEventListener("blur", function () {  //Importantisimo, los campos, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 0" para que NO AÑADA ARTICULOS
+					ValidarCampos(0);
+				});
 
 				var inputnumber = document.createElement("input");
 				inputnumber.setAttribute("type", "number");
+				inputnumber.addEventListener("blur", function () {  //Importantisimo, los campos, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 0" para que NO AÑADA ARTICULOS
+					ValidarCampos(0);
+				});
 
-				if (i==0) {
+				if (i == 0) {
 					paragraph.appendChild(document.createTextNode("Numero de serie(Obligatorio): "));
 					inputtext.setAttribute("id", "Num_serie");
 					paragraph.appendChild(inputtext);
 				}
-				if (i==1) {
+				if (i == 1) {
 					paragraph.appendChild(document.createTextNode("Nombre(Obligatorio): "));
 					inputtext.setAttribute("id", "Nombre");
 					paragraph.appendChild(inputtext);
 				}
-				if (i==2) {
+				if (i == 2) {
 					paragraph.appendChild(document.createTextNode("Precio: "));
 					inputnumber.setAttribute("id", "Precio");
 					paragraph.appendChild(inputnumber);
 				}
-				if (i==3) {
+				if (i == 3) {
 					paragraph.appendChild(document.createTextNode("Talla(Obligatorio): "));
 					inputtext.setAttribute("id", "Talla");
 					paragraph.appendChild(inputtext);
 				}
-				if (i==4) {
+				if (i == 4) {
 					paragraph.appendChild(document.createTextNode("Color: "));
 					inputtext.setAttribute("id", "Color");
 					paragraph.appendChild(inputtext);
 				}
-				if (i==5) {
+				if (i == 5) {
 					paragraph.appendChild(document.createTextNode("Cantidad: "));
 					inputtext.setAttribute("id", "Cantidad");
 					paragraph.appendChild(inputtext);
@@ -567,53 +659,234 @@ function GenerarCampos(tipo) {
 				div.appendChild(paragraph);
 			}
 
-			break;
-		case 'Pantalon':
-			pintar += "<p>Numero de serie(Obligatorio): <input type='text' id='Num_serie'></p>";
-			pintar += "<p>Nombre(Obligatorio): <input type='text' id='Nombre'></p>";
-			pintar += "<p>Precio: <input type='number' id='Precio'></p>";
-			pintar += "<p>Talla(Obligatorio): <input type='text' id='Talla'></p>";
-			pintar += "<p>Color: <input type='text' id='Color'></p>";
-			pintar += "<p>Ancho: <input type='text' id='Ancho'></p>";
-			pintar += "<p>Largo: <input type='text' id='Largo'></p>";
-			pintar += "<p>Cantidad: <input type='text' id='Cantidad'></p>";
+			div.appendChild(confirmbutton);
 
 			break;
-		case 'Zapatilla':
-			pintar += "<p>Numero de serie(Obligatorio): <input type='text' id='Num_serie'></p>";
-			pintar += "<p>Nombre(Obligatorio): <input type='text' id='Nombre'></p>";
-			pintar += "<p>Precio: <input type='number' id='Precio'></p>";
-			pintar += "<p>Numero(Obligatorio): <input type='text' id='Numero'></p>";
-			pintar += "<p>Tipo(Obligatorio): <input type='text' id='Tipo'></p>";
-			pintar += "<p>Cantidad: <input type='text' id='Cantidad'></p>";
+
+		case 'Pantalon':
+			div.innerHTML = "";
+			Selector.value = "";
+			Selector.value = "Pantalon";
+
+			var paragraph = document.createElement("p");
+			paragraph.appendChild(document.createTextNode("Has seleccionado pantalón, por favor, introduce los datos del producto: "));
+			div.appendChild(paragraph);
+
+			for (let i = 0; i < 8; i++) {  //IMPORTANTE, EL LIMITE DE LA VARIABLE i SERAN EL TOTAL DE CAMPOS QUE TENDRÁ QUE GENERAR
+
+				var paragraph = document.createElement("p");
+
+				var inputtext = document.createElement("input");
+				inputtext.setAttribute("type", "text");
+				inputtext.addEventListener("blur", function () {  //Importantisimo, los campos, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 0" para que NO AÑADA ARTICULOS
+					ValidarCampos(0);
+				});
+
+				var inputnumber = document.createElement("input");
+				inputnumber.setAttribute("type", "number");
+				inputnumber.addEventListener("blur", function () {  //Importantisimo, los campos, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 0" para que NO AÑADA ARTICULOS
+					ValidarCampos(0);
+				});
+
+				if (i == 0) {
+					paragraph.appendChild(document.createTextNode("Numero de serie(Obligatorio): "));
+					inputtext.setAttribute("id", "Num_serie");
+					paragraph.appendChild(inputtext);
+				}
+				if (i == 1) {
+					paragraph.appendChild(document.createTextNode("Nombre(Obligatorio): "));
+					inputtext.setAttribute("id", "Nombre");
+					paragraph.appendChild(inputtext);
+				}
+				if (i == 2) {
+					paragraph.appendChild(document.createTextNode("Precio: "));
+					inputnumber.setAttribute("id", "Precio");
+					paragraph.appendChild(inputnumber);
+				}
+				if (i == 3) {
+					paragraph.appendChild(document.createTextNode("Talla(Obligatorio): "));
+					inputtext.setAttribute("id", "Talla");
+					paragraph.appendChild(inputtext);
+				}
+				if (i == 4) {
+					paragraph.appendChild(document.createTextNode("Color: "));
+					inputtext.setAttribute("id", "Color");
+					paragraph.appendChild(inputtext);
+				}
+				if (i == 5) {
+					paragraph.appendChild(document.createTextNode("Ancho: "));
+					inputtext.setAttribute("id", "Ancho");
+					paragraph.appendChild(inputtext);
+				}
+				if (i == 6) {
+					paragraph.appendChild(document.createTextNode("Largo: "));
+					inputtext.setAttribute("id", "Largo");
+					paragraph.appendChild(inputtext);
+				}
+				if (i == 7) {
+					paragraph.appendChild(document.createTextNode("Cantidad: "));
+					inputtext.setAttribute("id", "Cantidad");
+					paragraph.appendChild(inputtext);
+				}
+
+				div.appendChild(paragraph);
+			}
+
+			div.appendChild(confirmbutton);
+
 			break;
+
+		case 'Zapatilla':
+
+			div.innerHTML = "";
+			Selector.value = "";
+			Selector.value = "Zapatilla";
+
+			var paragraph = document.createElement("p");
+			paragraph.appendChild(document.createTextNode("Has seleccionado zapatilla, por favor, introduce los datos del producto: "));
+			div.appendChild(paragraph);
+
+			for (let i = 0; i < 6; i++) {  //IMPORTANTE, EL LIMITE DE LA VARIABLE i SERAN EL TOTAL DE CAMPOS QUE TENDRÁ QUE GENERAR
+
+				var paragraph = document.createElement("p");
+
+				var inputtext = document.createElement("input");
+				inputtext.setAttribute("type", "text");
+				inputtext.addEventListener("blur", function () {  //Importantisimo, los campos, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 0" para que NO AÑADA ARTICULOS
+					ValidarCampos(0);
+				});
+
+				var inputnumber = document.createElement("input");
+				inputnumber.setAttribute("type", "number");
+				inputnumber.addEventListener("blur", function () {  //Importantisimo, los campos, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 0" para que NO AÑADA ARTICULOS
+					ValidarCampos(0);
+				});
+
+				if (i == 0) {
+					paragraph.appendChild(document.createTextNode("Numero de serie(Obligatorio): "));
+					inputtext.setAttribute("id", "Num_serie");
+					paragraph.appendChild(inputtext);
+				}
+				if (i == 1) {
+					paragraph.appendChild(document.createTextNode("Nombre(Obligatorio): "));
+					inputtext.setAttribute("id", "Nombre");
+					paragraph.appendChild(inputtext);
+				}
+				if (i == 2) {
+					paragraph.appendChild(document.createTextNode("Precio: "));
+					inputnumber.setAttribute("id", "Precio");
+					paragraph.appendChild(inputnumber);
+				}
+				if (i == 3) {
+					paragraph.appendChild(document.createTextNode("Numero(Obligatorio): "));
+					inputtext.setAttribute("id", "Numero");
+					paragraph.appendChild(inputtext);
+				}
+				if (i == 4) {
+					paragraph.appendChild(document.createTextNode("Tipo: "));
+					inputtext.setAttribute("id", "Tipo");
+					paragraph.appendChild(inputtext);
+				}
+				if (i == 5) {
+					paragraph.appendChild(document.createTextNode("Cantidad: "));
+					inputtext.setAttribute("id", "Cantidad");
+					paragraph.appendChild(inputtext);
+				}
+
+				div.appendChild(paragraph);
+			}
+
+			div.appendChild(confirmbutton);
+
+			break;
+
 		case 'Producto':
-			pintar += "<p>Numero de serie(Obligatorio): <input type='text' id='Num_serie'></p>";
-			pintar += "<p>Nombre(Obligatorio): <input type='text' id='Nombre'></p>";
-			pintar += "<p>Precio: <input type='number' id='Precio'></p>";
-			pintar += "<p>Iva: <input type='number' id='Iva'></p>";
-			pintar += "<p>Cantidad: <input type='text' id='Cantidad'></p>";
+
+			div.innerHTML = "";
+			Selector.value = "";
+			Selector.value = "Producto";
+
+			var paragraph = document.createElement("p");
+			paragraph.appendChild(document.createTextNode("Has seleccionado otro producto, por favor, introduce los datos del producto: "));
+			div.appendChild(paragraph);
+
+			for (let i = 0; i < 5; i++) {  //IMPORTANTE, EL LIMITE DE LA VARIABLE i SERAN EL TOTAL DE CAMPOS QUE TENDRÁ QUE GENERAR
+
+				var paragraph = document.createElement("p");
+
+				var inputtext = document.createElement("input");
+				inputtext.setAttribute("type", "text");
+				inputtext.addEventListener("blur", function () {  //Importantisimo, los campos, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 0" para que NO AÑADA ARTICULOS
+					ValidarCampos(0);
+				});
+
+				var inputnumber = document.createElement("input");
+				inputnumber.setAttribute("type", "number");
+				inputnumber.addEventListener("blur", function () {  //Importantisimo, los campos, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 0" para que NO AÑADA ARTICULOS
+					ValidarCampos(0);
+				});
+
+				if (i == 0) {
+					paragraph.appendChild(document.createTextNode("Numero de serie(Obligatorio): "));
+					inputtext.setAttribute("id", "Num_serie");
+					paragraph.appendChild(inputtext);
+				}
+				if (i == 1) {
+					paragraph.appendChild(document.createTextNode("Nombre(Obligatorio): "));
+					inputtext.setAttribute("id", "Nombre");
+					paragraph.appendChild(inputtext);
+				}
+				if (i == 2) {
+					paragraph.appendChild(document.createTextNode("Precio: "));
+					inputnumber.setAttribute("id", "Precio");
+					paragraph.appendChild(inputnumber);
+				}
+				if (i == 3) {
+					paragraph.appendChild(document.createTextNode("Iva: "));
+					inputtext.setAttribute("id", "Iva");
+					paragraph.appendChild(inputtext);
+				}
+
+				if (i == 4) {
+					paragraph.appendChild(document.createTextNode("Cantidad: "));
+					inputtext.setAttribute("id", "Cantidad");
+					paragraph.appendChild(inputtext);
+				}
+
+				div.appendChild(paragraph);
+			}
+
+			div.appendChild(confirmbutton);
+
 			break;
 
 		default:
 
-			pintar += "<h4> Por favor, seleccione un articulo </h4>";
+			//NUNCA SE VA A MOSTRAR ESTA OPCIÓN, PERO POR SI ACASO LO DEJAMOS PARA MAS SOLIDEZ DEL CÓDIGO
+
+			titulo = createElement("h4");
+			div.appendChild(titulo.createTextNode("Por favor, seleccione un articulo"));
 
 			break;
 	}
-
-	// document.getElementById('MostrarCampos').innerHTML = pintar;
-
-
 }
 
 /*
 Funcion que muestra los articulos que se han introducido en el carrito
-@version 1.0
+@version 2.0
 */
 function MostrarCarrito() {
 
-	var pintar = "";
+
+	var div = document.getElementById("mostrarcarrito");
+	div.innerHTML = "";
+
+	var Title = document.createElement("h2");
+	Title.appendChild(document.createTextNode("Listado:"));
+	var TitleTotalArticles = document.createElement("h4");
+	var TitlePriceWithoutIVA = document.createElement("h4");
+	var TitleTotalPrice = document.createElement("h4");
+	var Articlelist = document.createElement("ul");
 
 	var cont = 0;
 	var cont1 = 0;
@@ -642,45 +915,46 @@ function MostrarCarrito() {
 		cont1++;
 	});
 
-	pintar += "<h4> Artículos en tu carrito: " + TotalArticulos + " </h4>";
-	pintar += "<h4> Precio sin IVA: " + PrecioSinIva + "€ </h4>";
-	pintar += "<h4> Precio total a pagar: " + Totalprecio + "€ </h4>";
+	TitleTotalArticles.appendChild(document.createTextNode("Artículos en tu carrito: " + TotalArticulos));
+	TitlePriceWithoutIVA.appendChild(document.createTextNode("Precio sin IVA: " + PrecioSinIva + "€"));
+	TitleTotalPrice.appendChild(document.createTextNode("Precio total a pagar: " + Totalprecio + "€"));
 
 	carritocompra.items.forEach(element => {
 
-		pintar += "<input type='radio' name=article id=" + cont + " value=" + cont + ">" + element.num_serie + " - " + element.nombre + " - " + element.precio + "€ -- " + carritocompra.cantidades[cont] + " Unidades <br>";
+		var Article = document.createElement("li");
+		Article.appendChild(document.createTextNode(element.num_serie + " - " + element.nombre + " - " + element.precio + "€ -- " + carritocompra.cantidades[cont] + " Unidades"));
+		Articlelist.appendChild(Article);
 		cont++;
 	});
 
-	document.getElementById('mostrarcarrito').innerHTML = pintar;
+	div.appendChild(Title);
+	div.appendChild(TitleTotalArticles);
+	div.appendChild(TitlePriceWithoutIVA);
+	div.appendChild(TitleTotalPrice);
+	div.appendChild(Articlelist);
 
 }
 /*
-Funcion que elimina los articulos marcados en el radiobutton generado en la funcion MostrarCarrito(), y a continuacion refresca la pantalla
-@version 1.0
+Funcion para eliminar el ultimo producto añadido al carrito o todos.
+@version 2.0
 */
-function EliminarArticulo() {
+function EliminarArticulo(opcion) {
 
-	for (let i in carritocompra.items) {
+	switch (opcion) {
+		case 1:
 
-		if (document.getElementById(i).checked) {
-			carritocompra.items.splice(i, 1);
-			carritocompra.cantidades.splice(i, 1);
-		}
+			carritocompra.items.pop();
+			carritocompra.cantidades.pop();
+			MostrarCarrito();
+			break;
+
+		case 2:
+
+			carritocompra.items = [];
+			carritocompra.cantidades = [];
+			MostrarCarrito();
+			break;
+		default:
+			break;
 	}
-
-	MostrarCarrito();
-}
-
-/*
-Funcion DE PRUEBA DEL EJERCICIO, no se puede utilizar, a menos que actives el boton test en el html
-@version 1.0
-*/
-
-function testExercise() {
-
-	console.log(carritocompra.items);
-	console.log(carritocompra.cantidades);
-
-
 }
