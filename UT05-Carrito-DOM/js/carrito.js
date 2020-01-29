@@ -194,26 +194,29 @@ function ValidarCampos(modo) {
 				var re1 = new RegExp('^(XS|S|M|L|XL|XXL|XXXL)$');
 				console.log(re1);
 
-				if (num_serie == "") {
+				if (num_serie == "" && modo == 1) {
 					throw "ERROR, el numero de serie es un campo OBLIGATORIO y no puede estar vacío";
 				}
-				if (!num_serie.match(re)) {
-					throw "ERROR, el numero de serie debe contener 8 digitos";
+				if (num_serie != "") {
+					if (!num_serie.match(re)) {
+						throw "ERROR, el numero de serie debe contener 8 digitos";
+					}
 				}
-
-				if (nombre == "") {
+				if (nombre == "" && modo == 1) {
 					throw "ERROR, el nombre es un campo OBLIGATORIO y no puede estar vacío";
 				}
 
-				if (talla == "") {
+				if (talla == "" && modo == 1) {
 					throw "ERROR, la talla es un campo OBLIGATORIO y no puede estar vacío";
 				}
 
 				// if (iva != 10) {
 				// 	throw "ERROR, el iva para este articulo solo puede ser 10%";
 				// }
-				if (!talla.match(re1)) {
-					throw "ERROR, las tallas disponibles son: XS | S | M | L | XL | XXL | XXXL";
+				if (talla != "") {
+					if (!talla.match(re1)) {
+						throw "ERROR, las tallas disponibles son: XS | S | M | L | XL | XXL | XXXL";
+					}
 				}
 
 			} catch (error) {
@@ -250,29 +253,30 @@ function ValidarCampos(modo) {
 				var re3 = new RegExp('^([2][8-9]|[3-4][0-9]|[5][0-4])$');
 				console.log(re3);
 
-				if (num_serie == "") {
+				if (num_serie == "" && modo == 1) {
 					throw "ERROR, el numero de serie es un campo OBLIGATORIO y no puede estar vacío";
 				}
 
-
-				if (!num_serie.match(re)) {
-					throw "ERROR, el numero de serie debe contener 8 digitos";
+				if (num_serie != "") {
+					if (!num_serie.match(re)) {
+						throw "ERROR, el numero de serie debe contener 8 digitos";
+					}
 				}
-
-				if (nombre == "") {
+				if (nombre == "" && modo == 1) {
 					throw "ERROR, el nombre es un campo OBLIGATORIO y no puede estar vacío";
 				}
 
-				if (talla == "") {
+				if (talla == "" && modo == 1) {
 					throw "ERROR, la talla es un campo OBLIGATORIO y no puede estar vacío";
 				}
 
 				// if (iva!=10) {
 				// 	throw "ERROR, el iva para este articulo solo puede ser 10%";
 				// }
-
-				if (!talla.match(re1)) {
-					throw "ERROR, las tallas disponibles son: XS | S | M | L | XL | XXL | XXXL";
+				if (talla != "") {
+					if (!talla.match(re1)) {
+						throw "ERROR, las tallas disponibles son: XS | S | M | L | XL | XXL | XXXL";
+					}
 				}
 				if (ancho != "") {
 
@@ -318,34 +322,36 @@ function ValidarCampos(modo) {
 				var re2 = new RegExp('^([1][6-9]|[2-3][0-9]|[4][0-8])$');
 				console.log(re2);
 
-				if (num_serie == "") {
+				if (num_serie == "" && modo == 1) {
 					throw "ERROR, el numero de serie es un campo OBLIGATORIO y no puede estar vacío";
 				}
-				if (!num_serie.match(re)) {
-					throw "ERROR, el numero de serie debe contener 8 digitos";
+				if (num_serie != "") {
+					if (!num_serie.match(re)) {
+						throw "ERROR, el numero de serie debe contener 8 digitos";
+					}
 				}
-
-				if (nombre == "") {
+				if (nombre == "" && modo == 1) {
 					throw "ERROR, el nombre es un campo OBLIGATORIO y no puede estar vacío";
 				}
 
-				if (numero == "") {
+				if (numero == "" && modo == 1) {
 					throw "ERROR, el numero es un campo OBLIGATORIO y no puede estar vacío";
 				}
 				if (!numero.match(re2)) {
 					throw "ERROR, el numero debe ser un numero y estar entre 16 y 48";
 				}
 
-				if (tipo == "") {
+				if (tipo == "" && modo == 1) {
 					throw "ERROR, el tipo es un campo OBLIGATORIO y no puede estar vacío";
 				}
 
 				// if (iva!=10) {
 				// 	throw "ERROR, el iva para este articulo solo puede ser 10%";
 				// }
-
-				if (!tipo.match(re1)) {
-					throw "ERROR, los tipos disponibles son: EU | USA | UK | CM ";
+				if (tipo != "") {
+					if (!tipo.match(re1)) {
+						throw "ERROR, los tipos disponibles son: EU | USA | UK | CM ";
+					}
 				}
 
 			} catch (error) {
@@ -373,15 +379,16 @@ function ValidarCampos(modo) {
 				var re1 = new RegExp('^([0-9]|[1][0-9]|[2][01])$');
 				console.log(re1);
 
-				if (num_serie == "") {
+				if (num_serie == "" && modo == 1) {
 					throw "ERROR, el numero de serie es un campo OBLIGATORIO y no puede estar vacío";
 				}
-
-				if (!num_serie.match(re)) {
-					throw "ERROR, el numero de serie debe contener 8 digitos";
+				if (num_serie != "") {
+					if (!num_serie.match(re)) {
+						throw "ERROR, el numero de serie debe contener 8 digitos";
+					}
 				}
 
-				if (nombre == "") {
+				if (nombre == "" && modo == 1) {
 					throw "ERROR, el nombre es un campo OBLIGATORIO y no puede estar vacío";
 				}
 
@@ -598,68 +605,80 @@ function GenerarCampos(tipo) {
 	});
 
 	campos = new Array();
+
 	switch (tipo) {
 		case 'Camiseta':
 			div.innerHTML = "";
 			Selector.value = "";
 			Selector.value = "Camiseta";
 
+			var divbootstrap = document.createElement("div");
+			divbootstrap.setAttribute("class", "col-sm-3 my-2");
 
 			var paragraph = document.createElement("p");
-			paragraph.appendChild(document.createTextNode("Has seleccionado camiseta, por favor, introduce los datos del producto: "));
+			paragraph.appendChild(document.createTextNode("  Has seleccionado camiseta, por favor, introduce los datos del producto: "));
 			div.appendChild(paragraph);
 
 			for (let i = 0; i < 6; i++) {  //IMPORTANTE, EL LIMITE DE LA VARIABLE i SERAN EL TOTAL DE CAMPOS QUE TENDRÁ QUE GENERAR
 
-				var paragraph = document.createElement("p");
+				var br = document.createElement("br");
 
 				var inputtext = document.createElement("input");
 				inputtext.setAttribute("type", "text");
+				inputtext.setAttribute("class", "form-control"); //BOOTSTRAP
 				inputtext.addEventListener("blur", function () {  //Importantisimo, los campos, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 0" para que NO AÑADA ARTICULOS
 					ValidarCampos(0);
 				});
 
 				var inputnumber = document.createElement("input");
 				inputnumber.setAttribute("type", "number");
+				inputnumber.setAttribute("class", "form-control"); //BOOTSTRAP
 				inputnumber.addEventListener("blur", function () {  //Importantisimo, los campos, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 0" para que NO AÑADA ARTICULOS
 					ValidarCampos(0);
 				});
 
 				if (i == 0) {
-					paragraph.appendChild(document.createTextNode("Numero de serie(Obligatorio): "));
+					// paragraph.appendChild(document.createTextNode("Numero de serie(Obligatorio): "));
+					inputtext.setAttribute("placeholder", "Numero de serie(Obligatorio)");
 					inputtext.setAttribute("id", "Num_serie");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 1) {
-					paragraph.appendChild(document.createTextNode("Nombre(Obligatorio): "));
+					inputtext.setAttribute("placeholder", "Nombre(Obligatorio) ");
 					inputtext.setAttribute("id", "Nombre");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 2) {
-					paragraph.appendChild(document.createTextNode("Precio: "));
+					inputnumber.setAttribute("placeholder", "Precio ");
 					inputnumber.setAttribute("id", "Precio");
-					paragraph.appendChild(inputnumber);
+					divbootstrap.appendChild(inputnumber);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 3) {
-					paragraph.appendChild(document.createTextNode("Talla(Obligatorio): "));
+					inputtext.setAttribute("placeholder", "Talla(Obligatorio) ");
 					inputtext.setAttribute("id", "Talla");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 4) {
-					paragraph.appendChild(document.createTextNode("Color: "));
+					inputtext.setAttribute("placeholder", "Color ");
 					inputtext.setAttribute("id", "Color");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 5) {
-					paragraph.appendChild(document.createTextNode("Cantidad: "));
+					inputtext.setAttribute("placeholder", "Cantidad ");
 					inputtext.setAttribute("id", "Cantidad");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 
-				div.appendChild(paragraph);
+				div.appendChild(divbootstrap);
 			}
 
-			div.appendChild(confirmbutton);
+			divbootstrap.appendChild(confirmbutton);
 
 			break;
 
@@ -668,71 +687,84 @@ function GenerarCampos(tipo) {
 			Selector.value = "";
 			Selector.value = "Pantalon";
 
+			var divbootstrap = document.createElement("div");
+			divbootstrap.setAttribute("class", "col-sm-3 my-2");
+
 			var paragraph = document.createElement("p");
-			paragraph.appendChild(document.createTextNode("Has seleccionado pantalón, por favor, introduce los datos del producto: "));
+			paragraph.appendChild(document.createTextNode("  Has seleccionado pantalón, por favor, introduce los datos del producto: "));
 			div.appendChild(paragraph);
 
 			for (let i = 0; i < 8; i++) {  //IMPORTANTE, EL LIMITE DE LA VARIABLE i SERAN EL TOTAL DE CAMPOS QUE TENDRÁ QUE GENERAR
 
-				var paragraph = document.createElement("p");
+				var br = document.createElement("br");
 
 				var inputtext = document.createElement("input");
 				inputtext.setAttribute("type", "text");
+				inputtext.setAttribute("class", "form-control"); //BOOTSTRAP
 				inputtext.addEventListener("blur", function () {  //Importantisimo, los campos, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 0" para que NO AÑADA ARTICULOS
 					ValidarCampos(0);
 				});
 
 				var inputnumber = document.createElement("input");
 				inputnumber.setAttribute("type", "number");
+				inputnumber.setAttribute("class", "form-control"); //BOOTSTRAP
 				inputnumber.addEventListener("blur", function () {  //Importantisimo, los campos, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 0" para que NO AÑADA ARTICULOS
 					ValidarCampos(0);
 				});
 
 				if (i == 0) {
-					paragraph.appendChild(document.createTextNode("Numero de serie(Obligatorio): "));
+					inputtext.setAttribute("placeholder", "Numero de serie(Obligatorio)");
 					inputtext.setAttribute("id", "Num_serie");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 1) {
-					paragraph.appendChild(document.createTextNode("Nombre(Obligatorio): "));
+					inputtext.setAttribute("placeholder", "Nombre(Obligatorio)");
 					inputtext.setAttribute("id", "Nombre");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 2) {
-					paragraph.appendChild(document.createTextNode("Precio: "));
+					inputnumber.setAttribute("placeholder", "Precio");
 					inputnumber.setAttribute("id", "Precio");
-					paragraph.appendChild(inputnumber);
+					divbootstrap.appendChild(inputnumber);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 3) {
-					paragraph.appendChild(document.createTextNode("Talla(Obligatorio): "));
+					inputtext.setAttribute("placeholder", "Talla(Obligatorio)");
 					inputtext.setAttribute("id", "Talla");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 4) {
-					paragraph.appendChild(document.createTextNode("Color: "));
+					inputtext.setAttribute("placeholder", "Color ");
 					inputtext.setAttribute("id", "Color");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 5) {
-					paragraph.appendChild(document.createTextNode("Ancho: "));
+					inputtext.setAttribute("placeholder", "Ancho");
 					inputtext.setAttribute("id", "Ancho");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 6) {
-					paragraph.appendChild(document.createTextNode("Largo: "));
+					inputtext.setAttribute("placeholder", "Largo ");
 					inputtext.setAttribute("id", "Largo");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 7) {
-					paragraph.appendChild(document.createTextNode("Cantidad: "));
+					inputtext.setAttribute("placeholder", "Cantidad ");
 					inputtext.setAttribute("id", "Cantidad");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 
-				div.appendChild(paragraph);
+				div.appendChild(divbootstrap);
 			}
 
-			div.appendChild(confirmbutton);
+			divbootstrap.appendChild(confirmbutton);
 
 			break;
 
@@ -742,61 +774,72 @@ function GenerarCampos(tipo) {
 			Selector.value = "";
 			Selector.value = "Zapatilla";
 
+			var divbootstrap = document.createElement("div");
+			divbootstrap.setAttribute("class", "col-sm-3 my-2");
+
 			var paragraph = document.createElement("p");
-			paragraph.appendChild(document.createTextNode("Has seleccionado zapatilla, por favor, introduce los datos del producto: "));
+			paragraph.appendChild(document.createTextNode("  Has seleccionado zapatilla, por favor, introduce los datos del producto: "));
 			div.appendChild(paragraph);
 
 			for (let i = 0; i < 6; i++) {  //IMPORTANTE, EL LIMITE DE LA VARIABLE i SERAN EL TOTAL DE CAMPOS QUE TENDRÁ QUE GENERAR
 
-				var paragraph = document.createElement("p");
+				var br = document.createElement("br");
 
 				var inputtext = document.createElement("input");
 				inputtext.setAttribute("type", "text");
+				inputtext.setAttribute("class", "form-control"); //BOOTSTRAP
 				inputtext.addEventListener("blur", function () {  //Importantisimo, los campos, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 0" para que NO AÑADA ARTICULOS
 					ValidarCampos(0);
 				});
 
 				var inputnumber = document.createElement("input");
 				inputnumber.setAttribute("type", "number");
+				inputnumber.setAttribute("class", "form-control"); //BOOTSTRAP
 				inputnumber.addEventListener("blur", function () {  //Importantisimo, los campos, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 0" para que NO AÑADA ARTICULOS
 					ValidarCampos(0);
 				});
 
 				if (i == 0) {
-					paragraph.appendChild(document.createTextNode("Numero de serie(Obligatorio): "));
+					inputtext.setAttribute("placeholder", "Numero de serie(Obligatorio) ");
 					inputtext.setAttribute("id", "Num_serie");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 1) {
-					paragraph.appendChild(document.createTextNode("Nombre(Obligatorio): "));
+					inputtext.setAttribute("placeholder", "Nombre(Obligatorio) ");
 					inputtext.setAttribute("id", "Nombre");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 2) {
-					paragraph.appendChild(document.createTextNode("Precio: "));
+					inputnumber.setAttribute("placeholder", "Precio ");
 					inputnumber.setAttribute("id", "Precio");
-					paragraph.appendChild(inputnumber);
+					divbootstrap.appendChild(inputnumber);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 3) {
-					paragraph.appendChild(document.createTextNode("Numero(Obligatorio): "));
+					inputtext.setAttribute("placeholder", "Numero(Obligatorio) ");
 					inputtext.setAttribute("id", "Numero");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 4) {
-					paragraph.appendChild(document.createTextNode("Tipo: "));
+					inputtext.setAttribute("placeholder", "Tipo ");
 					inputtext.setAttribute("id", "Tipo");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 5) {
-					paragraph.appendChild(document.createTextNode("Cantidad: "));
+					inputtext.setAttribute("placeholder", "Cantidad ");
 					inputtext.setAttribute("id", "Cantidad");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 
-				div.appendChild(paragraph);
+				div.appendChild(divbootstrap);
 			}
 
-			div.appendChild(confirmbutton);
+			divbootstrap.appendChild(confirmbutton);
 
 			break;
 
@@ -806,57 +849,67 @@ function GenerarCampos(tipo) {
 			Selector.value = "";
 			Selector.value = "Producto";
 
+			var divbootstrap = document.createElement("div");
+			divbootstrap.setAttribute("class", "col-sm-3 my-2");
+
 			var paragraph = document.createElement("p");
-			paragraph.appendChild(document.createTextNode("Has seleccionado otro producto, por favor, introduce los datos del producto: "));
+			paragraph.appendChild(document.createTextNode("  Has seleccionado otro producto, por favor, introduce los datos del producto: "));
 			div.appendChild(paragraph);
 
 			for (let i = 0; i < 5; i++) {  //IMPORTANTE, EL LIMITE DE LA VARIABLE i SERAN EL TOTAL DE CAMPOS QUE TENDRÁ QUE GENERAR
 
-				var paragraph = document.createElement("p");
+				var br = document.createElement("br");
 
 				var inputtext = document.createElement("input");
 				inputtext.setAttribute("type", "text");
+				inputtext.setAttribute("class", "form-control"); //BOOTSTRAP
 				inputtext.addEventListener("blur", function () {  //Importantisimo, los campos, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 0" para que NO AÑADA ARTICULOS
 					ValidarCampos(0);
 				});
 
 				var inputnumber = document.createElement("input");
 				inputnumber.setAttribute("type", "number");
+				inputnumber.setAttribute("class", "form-control"); //BOOTSTRAP
 				inputnumber.addEventListener("blur", function () {  //Importantisimo, los campos, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 0" para que NO AÑADA ARTICULOS
 					ValidarCampos(0);
 				});
 
 				if (i == 0) {
-					paragraph.appendChild(document.createTextNode("Numero de serie(Obligatorio): "));
+					inputtext.setAttribute("placeholder", "Numer de serie(Obligatorio) ");
 					inputtext.setAttribute("id", "Num_serie");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 1) {
-					paragraph.appendChild(document.createTextNode("Nombre(Obligatorio): "));
+					inputtext.setAttribute("placeholder", "Nombre(Obligatorio) ");
 					inputtext.setAttribute("id", "Nombre");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 2) {
-					paragraph.appendChild(document.createTextNode("Precio: "));
+					inputnumber.setAttribute("placeholder", "Precio ");
 					inputnumber.setAttribute("id", "Precio");
-					paragraph.appendChild(inputnumber);
+					divbootstrap.appendChild(inputnumber);
+					divbootstrap.appendChild(br);
 				}
 				if (i == 3) {
-					paragraph.appendChild(document.createTextNode("Iva: "));
+					inputtext.setAttribute("placeholder", "Iva ");
 					inputtext.setAttribute("id", "Iva");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 
 				if (i == 4) {
-					paragraph.appendChild(document.createTextNode("Cantidad: "));
+					inputtext.setAttribute("placeholder", "Cantidad ");
 					inputtext.setAttribute("id", "Cantidad");
-					paragraph.appendChild(inputtext);
+					divbootstrap.appendChild(inputtext);
+					divbootstrap.appendChild(br);
 				}
 
-				div.appendChild(paragraph);
+				div.appendChild(divbootstrap);
 			}
 
-			div.appendChild(confirmbutton);
+			divbootstrap.appendChild(confirmbutton);
 
 			break;
 
