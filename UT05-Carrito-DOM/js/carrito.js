@@ -450,6 +450,7 @@ function Anadir(producto, confirmacion) {
 				div.innerHTML = "";
 				div.style.color = "green";
 				div.appendChild(document.createTextNode("Articulo Añadido correctamente"));
+				MostrarContadores();
 
 			} else {
 				div.innerHTML = "";
@@ -498,6 +499,7 @@ function Anadir(producto, confirmacion) {
 				div.innerHTML = "";
 				div.style.color = "green";
 				div.appendChild(document.createTextNode("Articulo Añadido correctamente"));
+				MostrarContadores();
 
 			} else {
 				div.innerHTML = "";
@@ -535,6 +537,7 @@ function Anadir(producto, confirmacion) {
 
 				document.getElementById('ControlDeErrores').style.color = "green";
 				document.getElementById('ControlDeErrores').innerHTML = "Articulo Añadido correctamente";
+				MostrarContadores();
 
 			} else {
 				div.innerHTML = "";
@@ -576,6 +579,7 @@ function Anadir(producto, confirmacion) {
 				div.innerHTML = "";
 				div.style.color = "green";
 				div.appendChild(document.createTextNode("Articulo Añadido correctamente"));
+				MostrarContadores();
 
 			} else {
 				div.innerHTML = "";
@@ -936,41 +940,41 @@ function MostrarCarrito() {
 
 	var Title = document.createElement("h2");
 	Title.appendChild(document.createTextNode("Listado:"));
-	var TitleTotalArticles = document.createElement("h4");
-	var TitlePriceWithoutIVA = document.createElement("h4");
-	var TitleTotalPrice = document.createElement("h4");
+	// var TitleTotalArticles = document.createElement("h4");
+	// var TitlePriceWithoutIVA = document.createElement("h4");
+	// var TitleTotalPrice = document.createElement("h4");
 	var Articlelist = document.createElement("ul");
 
 	var cont = 0;
-	var cont1 = 0;
-	var cont2 = 0;
-	var TotalArticulos = 0;
-	var Totalprecio = 0;
-	var PrecioSinIva = 0;
+	//  var cont1 = 0;
+	//  var cont2 = 0;
+	//  var TotalArticulos = 0;
+	//  var Totalprecio = 0;
+	//  var PrecioSinIva = 0;
 
-	//Con esto mostramos el total de articulos en nuestro carrito.
-	for (x of carritocompra.cantidades) {
-		x = parseInt(x);
-		TotalArticulos += x;
-	}
+	// Con esto mostramos el total de articulos en nuestro carrito.
+	// for (x of carritocompra.cantidades) {
+	// 	x = parseInt(x);
+	// 	TotalArticulos += x;
+	// }
 
-	carritocompra.items.forEach(element => {
-		element.precio = parseInt(element.precio);
-		Totalprecio += (element.precio * carritocompra.cantidades[cont2]);
-		cont2++;
-	});
+	// carritocompra.items.forEach(element => {
+	// 	element.precio = parseInt(element.precio);
+	// 	Totalprecio += (element.precio * carritocompra.cantidades[cont2]);
+	// 	cont2++;
+	// });
 
-	// Esta parte del codigo es para sacar los precios sin iva
-	carritocompra.items.forEach(element => {
-		element.precio = parseInt(element.precio);
-		element.iva = parseInt(element.iva);
-		PrecioSinIva += (element.precio * carritocompra.cantidades[cont1]) - (((element.precio * element.iva) / 100) * carritocompra.cantidades[cont1]);
-		cont1++;
-	});
+	//  Esta parte del codigo es para sacar los precios sin iva
+	// carritocompra.items.forEach(element => {
+	// 	element.precio = parseInt(element.precio);
+	// 	element.iva = parseInt(element.iva);
+	// 	PrecioSinIva += (element.precio * carritocompra.cantidades[cont1]) - (((element.precio * element.iva) / 100) * carritocompra.cantidades[cont1]);
+	// 	cont1++;
+	// });
 
-	TitleTotalArticles.appendChild(document.createTextNode("Artículos en tu carrito: " + TotalArticulos));
-	TitlePriceWithoutIVA.appendChild(document.createTextNode("Precio sin IVA: " + PrecioSinIva + "€"));
-	TitleTotalPrice.appendChild(document.createTextNode("Precio total a pagar: " + Totalprecio + "€"));
+	// TitleTotalArticles.appendChild(document.createTextNode("Artículos en tu carrito: " + TotalArticulos));
+	// TitlePriceWithoutIVA.appendChild(document.createTextNode("Precio sin IVA: " + PrecioSinIva + "€"));
+	// TitleTotalPrice.appendChild(document.createTextNode("Precio total a pagar: " + Totalprecio + "€"));
 
 	carritocompra.items.forEach(element => {
 
@@ -981,31 +985,76 @@ function MostrarCarrito() {
 	});
 
 	div.appendChild(Title);
-	div.appendChild(TitleTotalArticles);
-	div.appendChild(TitlePriceWithoutIVA);
-	div.appendChild(TitleTotalPrice);
+	// div.appendChild(TitleTotalArticles);
+	// div.appendChild(TitlePriceWithoutIVA);
+	// div.appendChild(TitleTotalPrice);
 	div.appendChild(Articlelist);
 
+}
+
+function MostrarContadores() {
+	var div = document.getElementById("mostrarcontador");
+	div.innerHTML = "";
+
+	var TitleTotalArticles = document.createElement("h4");
+	var TitlePriceWithoutIVA = document.createElement("h4");
+	var TitleTotalPrice = document.createElement("h4");
+
+	var cont1 = 0;
+	var cont2 = 0;
+	var TotalArticulos = 0;
+	var Totalprecio = 0;
+	var PrecioSinIva = 0;
+
+		//Con esto mostramos el total de articulos en nuestro carrito.
+		for (x of carritocompra.cantidades) {
+			x = parseInt(x);
+			TotalArticulos += x;
+		}
+	
+		carritocompra.items.forEach(element => {
+			element.precio = parseInt(element.precio);
+			Totalprecio += (element.precio * carritocompra.cantidades[cont2]);
+			cont2++;
+		});
+	
+		// Esta parte del codigo es para sacar los precios sin iva
+		carritocompra.items.forEach(element => {
+			element.precio = parseInt(element.precio);
+			element.iva = parseInt(element.iva);
+			PrecioSinIva += (element.precio * carritocompra.cantidades[cont1]) - (((element.precio * element.iva) / 100) * carritocompra.cantidades[cont1]);
+			cont1++;
+		});
+
+		TitleTotalArticles.appendChild(document.createTextNode("Artículos en tu carrito: " + TotalArticulos));
+		TitlePriceWithoutIVA.appendChild(document.createTextNode("Precio sin IVA: " + PrecioSinIva + "€"));
+		TitleTotalPrice.appendChild(document.createTextNode("Precio total a pagar: " + Totalprecio + "€"));
+
+		div.appendChild(TitleTotalArticles);
+		div.appendChild(TitlePriceWithoutIVA);
+		div.appendChild(TitleTotalPrice);
 }
 /*
 Funcion para eliminar el ultimo producto añadido al carrito o todos.
 @version 2.0
 */
 function EliminarArticulo(opcion) {
+	var div = document.getElementById("mostrarcarrito");
 
 	switch (opcion) {
 		case 1:
-
 			carritocompra.items.pop();
 			carritocompra.cantidades.pop();
 			MostrarCarrito();
+			MostrarContadores();
 			break;
 
 		case 2:
-
+			div.innerHTML = "";
 			carritocompra.items = [];
 			carritocompra.cantidades = [];
-			MostrarCarrito();
+			// MostrarCarrito();
+			MostrarContadores();
 			break;
 		default:
 			break;
