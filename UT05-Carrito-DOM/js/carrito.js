@@ -68,13 +68,6 @@ class Producto {
 	}
 }
 
-// Object.defineProperties(Producto, {
-// 	"num_serie": { get: function () { return this.num_serie; } },
-// 	"num_serie": { set: function (value) { this.num_serie = value; } },
-// 	"nombre": { get: function () { return this.nombre; } },
-// 	"nombre": { set: function (value) { this.nombre = value; } }
-// });
-
 class Camiseta extends Producto {
 	constructor(num_serie, nombre, precio, iva, talla, color) {
 		super(num_serie, nombre, precio, iva);
@@ -167,7 +160,7 @@ class Zapatilla extends Producto {
 var carritocompra = new Carrito(1, [], []);
 
 /*
-Funcion para validar los campos Y AÑADIR LOS ARTICULOS
+Funcion para validar los campos
 Esta funcion esta diseñada para que se ejecute de dos maneras:
 -Con un evento blur, para que se verifiquen en tiempo real los campos pero sin llamar a la funcion anadir() (debemos pasarle el parametro 1)
 -Con un evento clic(normalmente asociado a un boton), que este si añadirá los articulos.
@@ -337,10 +330,11 @@ function ValidarCampos(modo) {
 				if (numero == "" && modo == 1) {
 					throw "ERROR, el numero es un campo OBLIGATORIO y no puede estar vacío";
 				}
-				if (!numero.match(re2)) {
-					throw "ERROR, el numero debe ser un numero y estar entre 16 y 48";
+				if (numero != "") {
+					if (!numero.match(re2)) {
+						throw "ERROR, el numero debe ser un numero y estar entre 16 y 48";
+					}
 				}
-
 				if (tipo == "" && modo == 1) {
 					throw "ERROR, el tipo es un campo OBLIGATORIO y no puede estar vacío";
 				}
@@ -414,7 +408,10 @@ function ValidarCampos(modo) {
 
 }
 
-
+/*
+Funcion que añade objetos al carrito
+@version 2.0
+*/
 function Anadir(producto, confirmacion) {
 
 	var div = document.getElementById("ControlDeErrores");
@@ -590,10 +587,8 @@ function Anadir(producto, confirmacion) {
 	}
 
 }
-
-
 /*
-Funcion que genera la interfaz según lo que hayamos elegido en el desplegable
+Funcion que genera los campos del formulario del articulo a añadir
 @version 2.0
 */
 function GenerarCampos(tipo) {
@@ -828,7 +823,7 @@ function GenerarCampos(tipo) {
 					divbootstrap.appendChild(br);
 				}
 				if (i == 4) {
-					inputtext.setAttribute("placeholder", "Tipo ");
+					inputtext.setAttribute("placeholder", "Tipo(Obligatorio) ");
 					inputtext.setAttribute("id", "Tipo");
 					divbootstrap.appendChild(inputtext);
 					divbootstrap.appendChild(br);
@@ -940,41 +935,9 @@ function MostrarCarrito() {
 
 	var Title = document.createElement("h2");
 	Title.appendChild(document.createTextNode("Listado:"));
-	// var TitleTotalArticles = document.createElement("h4");
-	// var TitlePriceWithoutIVA = document.createElement("h4");
-	// var TitleTotalPrice = document.createElement("h4");
 	var Articlelist = document.createElement("ul");
 
 	var cont = 0;
-	//  var cont1 = 0;
-	//  var cont2 = 0;
-	//  var TotalArticulos = 0;
-	//  var Totalprecio = 0;
-	//  var PrecioSinIva = 0;
-
-	// Con esto mostramos el total de articulos en nuestro carrito.
-	// for (x of carritocompra.cantidades) {
-	// 	x = parseInt(x);
-	// 	TotalArticulos += x;
-	// }
-
-	// carritocompra.items.forEach(element => {
-	// 	element.precio = parseInt(element.precio);
-	// 	Totalprecio += (element.precio * carritocompra.cantidades[cont2]);
-	// 	cont2++;
-	// });
-
-	//  Esta parte del codigo es para sacar los precios sin iva
-	// carritocompra.items.forEach(element => {
-	// 	element.precio = parseInt(element.precio);
-	// 	element.iva = parseInt(element.iva);
-	// 	PrecioSinIva += (element.precio * carritocompra.cantidades[cont1]) - (((element.precio * element.iva) / 100) * carritocompra.cantidades[cont1]);
-	// 	cont1++;
-	// });
-
-	// TitleTotalArticles.appendChild(document.createTextNode("Artículos en tu carrito: " + TotalArticulos));
-	// TitlePriceWithoutIVA.appendChild(document.createTextNode("Precio sin IVA: " + PrecioSinIva + "€"));
-	// TitleTotalPrice.appendChild(document.createTextNode("Precio total a pagar: " + Totalprecio + "€"));
 
 	carritocompra.items.forEach(element => {
 
@@ -985,12 +948,14 @@ function MostrarCarrito() {
 	});
 
 	div.appendChild(Title);
-	// div.appendChild(TitleTotalArticles);
-	// div.appendChild(TitlePriceWithoutIVA);
-	// div.appendChild(TitleTotalPrice);
 	div.appendChild(Articlelist);
 
 }
+
+/*
+Funcion que muestra los contadores de articulos, precio total y precio sin iva
+@version 2.0
+*/
 
 function MostrarContadores() {
 	var div = document.getElementById("mostrarcontador");
@@ -1006,33 +971,33 @@ function MostrarContadores() {
 	var Totalprecio = 0;
 	var PrecioSinIva = 0;
 
-		//Con esto mostramos el total de articulos en nuestro carrito.
-		for (x of carritocompra.cantidades) {
-			x = parseInt(x);
-			TotalArticulos += x;
-		}
-	
-		carritocompra.items.forEach(element => {
-			element.precio = parseInt(element.precio);
-			Totalprecio += (element.precio * carritocompra.cantidades[cont2]);
-			cont2++;
-		});
-	
-		// Esta parte del codigo es para sacar los precios sin iva
-		carritocompra.items.forEach(element => {
-			element.precio = parseInt(element.precio);
-			element.iva = parseInt(element.iva);
-			PrecioSinIva += (element.precio * carritocompra.cantidades[cont1]) - (((element.precio * element.iva) / 100) * carritocompra.cantidades[cont1]);
-			cont1++;
-		});
+	//Con esto mostramos el total de articulos en nuestro carrito.
+	for (x of carritocompra.cantidades) {
+		x = parseInt(x);
+		TotalArticulos += x;
+	}
 
-		TitleTotalArticles.appendChild(document.createTextNode("Artículos en tu carrito: " + TotalArticulos));
-		TitlePriceWithoutIVA.appendChild(document.createTextNode("Precio sin IVA: " + PrecioSinIva + "€"));
-		TitleTotalPrice.appendChild(document.createTextNode("Precio total a pagar: " + Totalprecio + "€"));
+	carritocompra.items.forEach(element => {
+		element.precio = parseInt(element.precio);
+		Totalprecio += (element.precio * carritocompra.cantidades[cont2]);
+		cont2++;
+	});
 
-		div.appendChild(TitleTotalArticles);
-		div.appendChild(TitlePriceWithoutIVA);
-		div.appendChild(TitleTotalPrice);
+	// Esta parte del codigo es para sacar los precios sin iva
+	carritocompra.items.forEach(element => {
+		element.precio = parseInt(element.precio);
+		element.iva = parseInt(element.iva);
+		PrecioSinIva += (element.precio * carritocompra.cantidades[cont1]) - (((element.precio * element.iva) / 100) * carritocompra.cantidades[cont1]);
+		cont1++;
+	});
+
+	TitleTotalArticles.appendChild(document.createTextNode("Artículos en tu carrito: " + TotalArticulos));
+	TitlePriceWithoutIVA.appendChild(document.createTextNode("Precio sin IVA: " + PrecioSinIva + "€"));
+	TitleTotalPrice.appendChild(document.createTextNode("Precio total a pagar: " + Totalprecio + "€"));
+
+	div.appendChild(TitleTotalArticles);
+	div.appendChild(TitlePriceWithoutIVA);
+	div.appendChild(TitleTotalPrice);
 }
 /*
 Funcion para eliminar el ultimo producto añadido al carrito o todos.
