@@ -167,7 +167,7 @@ var TotalArticulos = 0;
 
 /*FUNCIONES QUE SE VAN A EJECUTAR AL INICIAR LA PÁGINA:*/
 
-window.onload = function(){
+window.onload = function () {
 	MostrarContadores();
 	load();
 }
@@ -1061,10 +1061,10 @@ La información que debe mostrar es:
 @version 3.0
 */
 
-var mywindow;
+var helpwindow;
 
 function load() {
-	
+
 	var botonayuda = document.getElementById("botonayuda");
 
 	botonayuda.addEventListener("click", function () {
@@ -1075,11 +1075,11 @@ function load() {
 
 function openWindow() {
 
-	if (!mywindow || mywindow.closed) {
-		mywindow = window.open("", "myWindow", "width=500,height=300,top=200,left=200, toolbar=no, menubar=no, titlebar=yes");
-		mywindow.document.title = "Información Carrito";
+	if (!helpwindow || helpwindow.closed) {
+		helpwindow = window.open("", "myWindow", "width=500,height=300,top=200,left=200, toolbar=no, menubar=no, titlebar=yes");
+		helpwindow.document.title = "Información Carrito";
 
-		var mywindowbody = mywindow.document.getElementsByTagName("body")[0];
+		var mywindowbody = helpwindow.document.getElementsByTagName("body")[0];
 
 
 		var reloj = document.createElement("div");
@@ -1087,7 +1087,7 @@ function openWindow() {
 
 		mywindowbody.appendChild(reloj);
 
-		mywindow.onload = Reloj;
+		helpwindow.onload = Reloj;
 
 
 		var br = document.createElement("br");
@@ -1114,9 +1114,18 @@ function openWindow() {
 
 		mywindowbody.appendChild(ArticulosEncarrito);
 
+		var br = document.createElement("br");
+		mywindowbody.appendChild(br);
+
+		var closebutton = document.createElement("button");
+		closebutton.appendChild(document.createTextNode("Cerrar ventana"));
+		closebutton.addEventListener("click", function () {  //Importantisimo, en el boton, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 1" para que añada articulos
+			closewindow();
+		});
+		mywindowbody.appendChild(closebutton);
 
 	} else {
-		mywindow.focus();
+		helpwindow.focus();
 	}
 	/*
 	Funcion para Crear un reloj que muestra la hora actual, actualizándose en cada segundo mostrando el tiempo real
@@ -1124,7 +1133,7 @@ function openWindow() {
 	*/
 
 	function Reloj() {
-		if (mywindow != null) {
+		if (helpwindow != null) {
 			var Factual = new Date();
 			var horas = Factual.getHours();
 			var minutos = Factual.getMinutes();
@@ -1149,5 +1158,14 @@ function openWindow() {
 	}
 
 	setInterval(function () { Reloj() }, 1000);
+
+}
+
+function closewindow() {
+	if (helpwindow || !(helpwindow.closed)) {
+
+		helpwindow.close();
+
+	}
 
 }
