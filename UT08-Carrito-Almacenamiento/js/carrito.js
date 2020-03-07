@@ -168,9 +168,22 @@ var TotalArticulos = 0;
 /*FUNCIONES QUE SE VAN A EJECUTAR AL INICIAR LA PÁGINA:*/
 
 window.onload = function () {
+
+	if (!sesionwindow || sesionwindow.closed) {
+		bloquearaplicacion();
+	} else if (localStorage.getItem("usuario") == null) {
+		opensesionWindow();
+		bloquearaplicacion();
+	} else {
+
+	}
+
+	opensesionWindow();
+	bloquearaplicacion();
+
 	MostrarContadores();
 	load();
-	opensesionWindow();
+
 }
 
 /*
@@ -1172,17 +1185,17 @@ function closehelpwindow() {
 
 var sesionwindow;
 
+
+
 function opensesionWindow() {
 
 	if (!sesionwindow || sesionwindow.closed) {
 		sesionwindow = window.open("", "sesionwindow", "width=600,height=400,top=200,left=200,resizable=no,scrollbars=no, toolbar=no, menubar=no, titlebar=yes");
 		sesionwindow.document.title = "Bienvenida";
 
-		//MODIFICAR ESTO
 		sesionwindow.addEventListener("blur", function () {
 			sesionwindow.focus();
 		});
-
 
 		var mywindowbody = sesionwindow.document.getElementsByTagName("body")[0];
 
@@ -1228,12 +1241,24 @@ function opensesionWindow() {
 		closebutton.appendChild(document.createTextNode("Aceptar"));
 
 
-		closebutton.addEventListener("click", function () {  //Importantisimo, en el boton, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 1" para que añada articulos
-			closesesionwindow();
+		closebutton.addEventListener("click", function () {
+
+			var br = document.createElement("br");
+			mywindowbody.appendChild(br);
+
+			var infosesion = document.createElement("h3");
+			infosesion.style.color = 'blue';
+			infosesion.appendChild(document.createTextNode("Iniciando sesión, esto puede llevar unos segundos... "));
+			mywindowbody.appendChild(infosesion);
+
+			setTimeout(function () { iniciosesion(), closesesionwindow(); }, 3000);
+
 		});
+
 		closebutton.disabled = true;
 
 		mywindowbody.appendChild(closebutton);
+
 
 	} else {
 		sesionwindow.focus();
@@ -1247,5 +1272,38 @@ function closesesionwindow() {
 		sesionwindow.close();
 
 	}
+
+}
+
+function iniciosesion() {
+	localStorage.setItem("usuario", sesionwindow.document.getElementById("sesionuser").value);
+	desbloquearaplicacion();
+}
+
+function bloquearaplicacion() {
+
+	var element = document.getElementById("avisosesion");
+
+	if (!document.body.contains(element)) {
+		var aviso = document.createElement("h1");
+		aviso.setAttribute("id", "avisosesion");
+		aviso.appendChild(document.createTextNode("PARA UTILIZAR LA APLICACIÓN INICIA SESIÓN, puede ser que su navegador haya bloqueado la ventana emergente de inicio de sesión, si este ha sido el caso, desbloquea la ventana y recarga la página"));
+		var body = document.getElementsByTagName("body")[0];
+		body.appendChild(aviso);
+	}
+
+	document.getElementById("page").style.display = 'none';
+
+}
+
+function desbloquearaplicacion() {
+
+	var element = document.getElementById("avisosesion");
+
+	if (document.body.contains(element)) {
+		element.remove();
+	}
+
+	document.getElementById("page").style.display = '';
 
 }
