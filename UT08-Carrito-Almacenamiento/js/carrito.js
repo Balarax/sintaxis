@@ -1062,6 +1062,11 @@ La información que debe mostrar es:
 @version 3.0
 */
 
+<<<<<<< HEAD
+=======
+var helpwindow;
+
+>>>>>>> 771683c8a1cdf64a7ef19c19b2a1e9a9616b8067
 function load() {
 
 	var botonayuda = document.getElementById("botonayuda");
@@ -1076,7 +1081,11 @@ var helpwindow;
 function openhelpWindow() {
 
 	if (!helpwindow || helpwindow.closed) {
+<<<<<<< HEAD
 		helpwindow = window.open("", "helpwindow", "width=500,height=300,top=200,left=200, toolbar=no, menubar=no, titlebar=yes");
+=======
+		helpwindow = window.open("", "myWindow", "width=500,height=300,top=200,left=200, toolbar=no, menubar=no, titlebar=yes");
+>>>>>>> 771683c8a1cdf64a7ef19c19b2a1e9a9616b8067
 		helpwindow.document.title = "Información Carrito";
 
 		var mywindowbody = helpwindow.document.getElementsByTagName("body")[0];
@@ -1120,7 +1129,11 @@ function openhelpWindow() {
 		var closebutton = document.createElement("button");
 		closebutton.appendChild(document.createTextNode("Cerrar ventana"));
 		closebutton.addEventListener("click", function () {  //Importantisimo, en el boton, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 1" para que añada articulos
+<<<<<<< HEAD
 			closehelpwindow();
+=======
+			closewindow();
+>>>>>>> 771683c8a1cdf64a7ef19c19b2a1e9a9616b8067
 		});
 		mywindowbody.appendChild(closebutton);
 
@@ -1161,13 +1174,18 @@ function openhelpWindow() {
 
 }
 
+<<<<<<< HEAD
 function closehelpwindow() {
+=======
+function closewindow() {
+>>>>>>> 771683c8a1cdf64a7ef19c19b2a1e9a9616b8067
 	if (helpwindow || !(helpwindow.closed)) {
 
 		helpwindow.close();
 
 	}
 
+<<<<<<< HEAD
 }
 
 var sesionwindow;
@@ -1248,4 +1266,6 @@ function closesesionwindow() {
 
 	}
 
+=======
+>>>>>>> 771683c8a1cdf64a7ef19c19b2a1e9a9616b8067
 }
