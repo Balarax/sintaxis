@@ -1084,6 +1084,11 @@ function load() {
 	})
 };
 
+/*
+Función que crea la ventana de ayuda
+
+@version 3.0
+*/
 var helpwindow;
 
 function openhelpWindow() {
@@ -1117,10 +1122,13 @@ function openhelpWindow() {
 		var br = document.createElement("br");
 		mywindowbody.appendChild(br);
 
-		// var nombreusuario = document.createElement("div");
-		// nombreusuario.appendChild(document.createTextNode("Versión 3.0"));
+		var nombreusuario = document.createElement("div");
+		nombreusuario.appendChild(document.createTextNode(localStorage.getItem("usuario")));
 
-		// mywindowbody.appendChild(nombreusuario);
+		mywindowbody.appendChild(nombreusuario);
+
+		var br = document.createElement("br");
+		mywindowbody.appendChild(br);
 
 		var ArticulosEncarrito = document.createElement("div");
 		ArticulosEncarrito.appendChild(document.createTextNode("Articulos en su carrito:" + TotalArticulos));
@@ -1174,6 +1182,12 @@ function openhelpWindow() {
 
 }
 
+/*
+Función que cierra la ventana de ayuda
+
+@version 3.0
+*/
+
 function closehelpwindow() {
 	if (helpwindow || !(helpwindow.closed)) {
 
@@ -1183,9 +1197,12 @@ function closehelpwindow() {
 
 }
 
+/*
+Función que crea la ventana de inicio de sesion
+
+@version 3.0
+*/
 var sesionwindow;
-
-
 
 function opensesionWindow() {
 
@@ -1266,6 +1283,12 @@ function opensesionWindow() {
 
 }
 
+/*
+Función que cierra la ventana de inicio de sesion
+
+@version 3.0
+*/
+
 function closesesionwindow() {
 	if (sesionwindow || !(sesionwindow.closed)) {
 
@@ -1275,10 +1298,22 @@ function closesesionwindow() {
 
 }
 
+/*
+Función que se encarga de guardar el usuario introducido desde la ventana de sesion en el navegador
+
+@version 3.0
+*/
+
 function iniciosesion() {
 	localStorage.setItem("usuario", sesionwindow.document.getElementById("sesionuser").value);
 	desbloquearaplicacion();
 }
+
+/*
+Función que se encarga de bloquear el acceso a la apliación y dar un aviso
+
+@version 3.0
+*/
 
 function bloquearaplicacion() {
 
@@ -1295,6 +1330,12 @@ function bloquearaplicacion() {
 	document.getElementById("page").style.display = 'none';
 
 }
+
+/*
+Función que se encarga de desbloquear el acceso a la aplicación y borrar el mensaje de aviso si este existiera creado en la función "bloquearaplicación"
+
+@version 3.0
+*/
 
 function desbloquearaplicacion() {
 
