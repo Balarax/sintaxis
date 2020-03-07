@@ -167,9 +167,10 @@ var TotalArticulos = 0;
 
 /*FUNCIONES QUE SE VAN A EJECUTAR AL INICIAR LA PÁGINA:*/
 
-window.onload = function(){
+window.onload = function () {
 	MostrarContadores();
 	load();
+	opensesionWindow();
 }
 
 /*
@@ -1029,7 +1030,7 @@ function EliminarArticulo(opcion) {
 		case 1:
 			carritocompra.items.pop();
 			carritocompra.cantidades.pop();
-			MostrarCarrito();
+			//MostrarCarrito();
 			MostrarContadores();
 			break;
 
@@ -1061,25 +1062,24 @@ La información que debe mostrar es:
 @version 3.0
 */
 
-var mywindow;
-
 function load() {
-	
+
 	var botonayuda = document.getElementById("botonayuda");
 
 	botonayuda.addEventListener("click", function () {
-		openWindow();
+		openhelpWindow();
 	})
 };
 
+var helpwindow;
 
-function openWindow() {
+function openhelpWindow() {
 
-	if (!mywindow || mywindow.closed) {
-		mywindow = window.open("", "myWindow", "width=500,height=300,top=200,left=200, toolbar=no, menubar=no, titlebar=yes");
-		mywindow.document.title = "Información Carrito";
+	if (!helpwindow || helpwindow.closed) {
+		helpwindow = window.open("", "helpwindow", "width=500,height=300,top=200,left=200, toolbar=no, menubar=no, titlebar=yes");
+		helpwindow.document.title = "Información Carrito";
 
-		var mywindowbody = mywindow.document.getElementsByTagName("body")[0];
+		var mywindowbody = helpwindow.document.getElementsByTagName("body")[0];
 
 
 		var reloj = document.createElement("div");
@@ -1087,7 +1087,7 @@ function openWindow() {
 
 		mywindowbody.appendChild(reloj);
 
-		mywindow.onload = Reloj;
+		helpwindow.onload = Reloj;
 
 
 		var br = document.createElement("br");
@@ -1114,9 +1114,18 @@ function openWindow() {
 
 		mywindowbody.appendChild(ArticulosEncarrito);
 
+		var br = document.createElement("br");
+		mywindowbody.appendChild(br);
+
+		var closebutton = document.createElement("button");
+		closebutton.appendChild(document.createTextNode("Cerrar ventana"));
+		closebutton.addEventListener("click", function () {  //Importantisimo, en el boton, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 1" para que añada articulos
+			closehelpwindow();
+		});
+		mywindowbody.appendChild(closebutton);
 
 	} else {
-		mywindow.focus();
+		helpwindow.focus();
 	}
 	/*
 	Funcion para Crear un reloj que muestra la hora actual, actualizándose en cada segundo mostrando el tiempo real
@@ -1124,7 +1133,7 @@ function openWindow() {
 	*/
 
 	function Reloj() {
-		if (mywindow != null) {
+		if (helpwindow != null) {
 			var Factual = new Date();
 			var horas = Factual.getHours();
 			var minutos = Factual.getMinutes();
@@ -1149,5 +1158,94 @@ function openWindow() {
 	}
 
 	setInterval(function () { Reloj() }, 1000);
+
+}
+
+function closehelpwindow() {
+	if (helpwindow || !(helpwindow.closed)) {
+
+		helpwindow.close();
+
+	}
+
+}
+
+var sesionwindow;
+
+function opensesionWindow() {
+
+	if (!sesionwindow || sesionwindow.closed) {
+		sesionwindow = window.open("", "sesionwindow", "width=600,height=400,top=200,left=200,resizable=no,scrollbars=no, toolbar=no, menubar=no, titlebar=yes");
+		sesionwindow.document.title = "Bienvenida";
+
+		//MODIFICAR ESTO
+		sesionwindow.addEventListener("blur", function () {
+			sesionwindow.focus();
+		});
+
+
+		var mywindowbody = sesionwindow.document.getElementsByTagName("body")[0];
+
+		var h1title = document.createElement("h1");
+		h1title.appendChild(document.createTextNode("¡Bienvenido a el Carrito! "));
+		mywindowbody.appendChild(h1title);
+
+		var br = document.createElement("br");
+		mywindowbody.appendChild(br);
+
+		var labeluser = document.createElement("label");
+		labeluser.appendChild(document.createTextNode("Introduzca su nombre de usuario: "));
+
+		var inputuser = document.createElement("input");
+		inputuser.setAttribute("type", "text");
+		inputuser.setAttribute("id", "sesionuser");
+
+		//PARA BLOQUEAR EL BOTON CERRAR
+
+		inputuser.addEventListener("keyup", function () {
+
+			var uservalue = sesionwindow.document.getElementById("sesionuser").value;
+			var button = sesionwindow.document.getElementById("okbutton");
+
+			if (uservalue === "") {
+				button.disabled = true;
+			} else {
+				button.disabled = false;
+			}
+		})
+
+		labeluser.appendChild(inputuser);
+
+		mywindowbody.appendChild(labeluser);
+
+		var br = document.createElement("br");
+		mywindowbody.appendChild(br);
+		var br = document.createElement("br");
+		mywindowbody.appendChild(br);
+
+		var closebutton = document.createElement("button");
+		closebutton.setAttribute("id", "okbutton");
+		closebutton.appendChild(document.createTextNode("Aceptar"));
+
+
+		closebutton.addEventListener("click", function () {  //Importantisimo, en el boton, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 1" para que añada articulos
+			closesesionwindow();
+		});
+		closebutton.disabled = true;
+
+		mywindowbody.appendChild(closebutton);
+
+	} else {
+		sesionwindow.focus();
+	}
+
+}
+
+function closesesionwindow() {
+	if (sesionwindow || !(sesionwindow.closed)) {
+
+		sesionwindow.close();
+
+	}
 
 }
