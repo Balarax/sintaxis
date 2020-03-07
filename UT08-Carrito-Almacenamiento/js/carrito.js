@@ -1306,6 +1306,7 @@ Función que se encarga de guardar el usuario introducido desde la ventana de se
 
 function iniciosesion() {
 	localStorage.setItem("usuario", sesionwindow.document.getElementById("sesionuser").value);
+
 	desbloquearaplicacion();
 }
 
@@ -1347,4 +1348,57 @@ function desbloquearaplicacion() {
 
 	document.getElementById("page").style.display = '';
 
+}
+
+function database(){
+const DB_NAME = 'UT08alumnos';
+const DB_VERSION = 3;
+const DB_STORE_NAME = 'students';
+const studentsData = [];
+
+var db;
+var request = indexedDB.open(DB_NAME, DB_VERSION);
+
+var students = [];
+var selectedStudentTR;
+
+//Manejadores de error o éxito al abrir nuestra bases de datos
+request.onerror = function (event) {
+
+  onError("Error en la solicitud: " + event.target.error);
+  // document.getElementById("error").appendChild(document.createTextNode("Error en la solicitud: " + event.target.error + "<br/>"));
+};
+
+request.onsuccess = function (event) {
+  // event.target hace referencia al objeto que lanzo el evento (base de datos)
+  db = event.target.result;
+  db.onerror = function (event) {
+    // Generic error handler for all errors targeted at this database's
+    // requests!
+    onError("Error en el acceso a la base de datos: " + event.target.error);
+    //document.getElementById("error").appendChild(document.createTextNode("Error en el acceso a la base de datos: " + event.target.error + "<br/>"));
+  };
+
+  var studentsObjectStore = db.transaction(DB_STORE_NAME).objectStore(DB_STORE_NAME);
+  var tBody = document.getElementById("datagrid").getElementsByTagName("tbody")[0];
+
+  studentsObjectStore.transaction.oncomplete = function (event) {
+
+    MensajeTablavacia();
+
+  }
+
+  studentsObjectStore.openCursor().onsuccess = function (event) {
+    var cursor = event.target.result;
+
+    if (cursor) {
+      var producto = new Producto(cursor.value.num_serie, cursor.value.nombre, cursor.value.precio);
+      student.lastname2 = cursor.value.lastname2;
+      students.push(student); //ESO ES PARA QUE DESAPAREZCA NO HAY ALUMNOS EN DATABASE
+      tBody.appendChild(createTRStudent(student, cursor.key));
+      cursor.continue();
+    }
+  };
+
+};
 }
