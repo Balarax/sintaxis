@@ -82,7 +82,7 @@ class Producto {
 	}
 
 	toString() {
-		return "Nombre: " + this.nombre + " Precio: " + this.precio + " Iva: " + this.iva + "%";
+		return "Tipo: " + this.tip + " Nombre: " + this.nombre + " Precio: " + this.precio + "€ Iva: " + this.iva + "%";
 	}
 }
 
@@ -121,13 +121,16 @@ class Camiseta extends Producto {
 	get tip() {
 		return this._tip;
 	}
+	set tip(value) {
+		this._tip = value;
+	}
 
 	toString() {
-		return "Nombre: " + this.nombre + " Precio: " + this.precio + " Iva: " + this.iva + "% Talla: " + this.talla + " Color: " + this.color;
+		return "Tipo: " + this.tip + " Nombre: " + this.nombre + " Precio: " + this.precio + "€ Talla: " + this.talla + " Color: " + this.color;
 	}
 }
 
-	Camiseta.prototype.getObject = function() {
+	Camiseta.prototype.getCamiseta = function() {
 	return {
 	num_serie: this.num_serie,
 	nombre: this.nombre,
@@ -135,7 +138,8 @@ class Camiseta extends Producto {
 	iva: this.iva,
 	usuario: this.usuario,
 	talla: this.talla,
-	color: this.color
+	color: this.color,
+	tip: this.tip
 };
 }
 
@@ -177,13 +181,16 @@ class Pantalon extends Producto {
 	get tip() {
 		return this._tip;
 	}
+	set tip(value) {
+		this._tip = value;
+	}
 
 	toString() {
-		return "Nombre: " + this.nombre + " Precio: " + this.precio + " Iva: " + this.iva + "% Talla: " + this.talla + " Color: " + this.color + " Ancho: " + this.ancho + " Largo: " + this.largo;
+		return "Tipo: " + this.tip + " Nombre: " + this.nombre + " Precio: " + this.precio + "€ Talla: " + this.talla + " Color: " + this.color + " Ancho: " + this.ancho + " Largo: " + this.largo;
 	}
 }
 
-	Pantalon.prototype.getObject = function() {
+	Pantalon.prototype.getPantalon = function() {
 	return {
 	num_serie: this.num_serie,
 	nombre: this.nombre,
@@ -193,7 +200,8 @@ class Pantalon extends Producto {
 	talla: this.talla,
 	color: this.color,
 	ancho: this.ancho,
-	largo: this.largo
+	largo: this.largo,
+	tip: this.tip
 };
 }
 
@@ -221,13 +229,16 @@ class Zapatilla extends Producto {
 	get tip() {
 		return this._tip;
 	}
+	set tip(value) {
+		this._tip = value;
+	}
 
 	toString() {
-		return "Nombre: " + this.nombre + " Precio: " + this.precio + " Iva: " + this.iva + "% Numero: " + this.numero + " Tipo: " + this.tipo;
+		return "Tipo: " + this.tip + " Nombre: " + this.nombre + " Precio: " + this.precio + "€ Numero: " + this.numero + " Formato: " + this.tipo;
 	}
 }
 
-	Zapatilla.prototype.getObject = function() {
+	Zapatilla.prototype.getZapatilla = function() {
 	return {
 	num_serie: this.num_serie,
 	nombre: this.nombre,
@@ -755,31 +766,78 @@ function GenerarCampos(tipo) {
 
 			// I cancel the submit event not to send the form.
 			// event.preventDefault();
+			// MensajeTablavacia();
 
 		}
 
+		if (tipo == "Camiseta") {
 
-		// var student = new Student(event.target.elements["firstname"].value, event.target.elements["lastname1"].value, event.target.elements["specialty"].value);
-		// student.lastname2 = event.target.elements["lastname2"].value;
+			var producto = new Camiseta(document.getElementById("Num_serie").value, document.getElementById("Nombre").value, document.getElementById("Precio").value, 0, localStorage.getItem("usuario"), document.getElementById("Talla").value, document.getElementById("Color").value);
+			producto.tip = "camiseta";
+			// I add the new Student to object store
+			// Number(selectedStudentTR.dataset.studentKey)
+			var request = studentsObjectStore.add(producto.getCamiseta());
+			request.onsuccess = function (event) {
+				console.log("Student add to object store: " + producto + " with key " + event.target.result);
 
-		// // I add the new Student to object store
-		// // Number(selectedStudentTR.dataset.studentKey)
-		// var request = studentsObjectStore.add(student.getObject());
-		// request.onsuccess = function (event) {
-		// 	document.getElementById("result").appendChild(document.createTextNode("Se ha creado el nuevo estudiante: " + student));
-		// 	console.log("Student add to object store: " + student + " with key " + event.target.result);
+				var tBody = document.getElementsByTagName("tbody")[0];
+				tBody.appendChild(createTRStudent(producto, event.target.result));
+			};
 
-		// 	var tBody = document.getElementsByTagName("tbody")[0];
-		// 	tBody.appendChild(createTRStudent(student, event.target.result));
-		// };
+			// I cancel the submit event not to send the form.
+			// event.preventDefault();
+			// MensajeTablavacia();
 
-		// // I cancel the submit event not to send the form.
-		// event.preventDefault();
+		}
+
+		if (tipo == "Pantalon") {
+
+
+			// var producto = new Producto(event.target.elements["num_serie"].value, event.target.elements["nombre"].value, event.target.elements["precio"].value,event.target.elements["iva"].value,event.target.elements["usuario"].value);
+			var producto = new Pantalon(document.getElementById("Num_serie").value, document.getElementById("Nombre").value, document.getElementById("Precio").value, 0, localStorage.getItem("usuario"), document.getElementById("Talla").value, document.getElementById("Color").value, document.getElementById("Ancho").value, document.getElementById("Largo").value);
+			producto.tip = "pantalon";
+			// I add the new Student to object store
+			// Number(selectedStudentTR.dataset.studentKey)
+			var request = studentsObjectStore.add(producto.getPantalon());
+			request.onsuccess = function (event) {
+				console.log("Student add to object store: " + producto + " with key " + event.target.result);
+
+				var tBody = document.getElementsByTagName("tbody")[0];
+				tBody.appendChild(createTRStudent(producto, event.target.result));
+			};
+
+			// I cancel the submit event not to send the form.
+			// event.preventDefault();
+			// MensajeTablavacia();
+
+		}
+
+		if (tipo == "Zapatilla") {
+
+
+			// var producto = new Producto(event.target.elements["num_serie"].value, event.target.elements["nombre"].value, event.target.elements["precio"].value,event.target.elements["iva"].value,event.target.elements["usuario"].value);
+			var producto = new Zapatilla(document.getElementById("Num_serie").value, document.getElementById("Nombre").value, document.getElementById("Precio").value, 0, localStorage.getItem("usuario"), document.getElementById("Numero").value, document.getElementById("Tipo").value);
+			producto.tip = "zapatilla";
+			// I add the new Student to object store
+			// Number(selectedStudentTR.dataset.studentKey)
+			var request = studentsObjectStore.add(producto.getZapatilla());
+			request.onsuccess = function (event) {
+				console.log("Student add to object store: " + producto + " with key " + event.target.result);
+
+				var tBody = document.getElementsByTagName("tbody")[0];
+				tBody.appendChild(createTRStudent(producto, event.target.result));
+			};
+
+			// I cancel the submit event not to send the form.
+			// event.preventDefault();
+			// MensajeTablavacia();
+
+		}
 
 	});
 
-	// confirmbutton.addEventListener("keyup", function () {
-		
+	// confirmbutton.addEventListener("keypress", function () {
+
 	// 	var error = document.getElementById("ControlDeErrores");
 	// 	var button = document.getElementById("confirmbutton");
 
@@ -1471,11 +1529,11 @@ function iniciosesion() {
 	var request = indexedDB.open(DB_NAME, DB_VERSION);
 
 	request.onerror = function (event) {
-	
+
 		onError("Error en la solicitud: " + event.target.error);
 		// document.getElementById("error").appendChild(document.createTextNode("Error en la solicitud: " + event.target.error + "<br/>"));
 	};
-	
+
 	request.onsuccess = function (event) {
 		// event.target hace referencia al objeto que lanzo el evento (base de datos)
 		db = event.target.result;
@@ -1485,10 +1543,16 @@ function iniciosesion() {
 			onError("Error en el acceso a la base de datos: " + event.target.error);
 			//document.getElementById("error").appendChild(document.createTextNode("Error en el acceso a la base de datos: " + event.target.error + "<br/>"));
 		};
-	
+
 		var studentsObjectStore = db.transaction(DB_STORE_NAME).objectStore(DB_STORE_NAME);
 		var tBody = document.getElementById("datagrid").getElementsByTagName("tbody")[0];
-	
+
+		studentsObjectStore.transaction.oncomplete = function (event) {
+
+			// MensajeTablavacia();
+
+		}
+
 		studentsObjectStore.openCursor().onsuccess = function (event) {
 			var cursor = event.target.result;
 
@@ -1500,26 +1564,68 @@ function iniciosesion() {
 					students.push(Article); //ESO ES PARA QUE DESAPAREZCA NO HAY ALUMNOS EN DATABASE
 					tBody.appendChild(createTRStudent(Article, cursor.key));
 					cursor.continue();
+				} else if (cursor.value.tip == "camiseta" && cursor.value.usuario == localStorage.getItem("usuario")) {
+
+					var Article = new Camiseta(cursor.value.num_serie, cursor.value.nombre, cursor.value.precio, cursor.value.iva, cursor.value.usuario, cursor.value.talla, cursor.value.color);
+					students.push(Article); //ESO ES PARA QUE DESAPAREZCA NO HAY ALUMNOS EN DATABASE
+					tBody.appendChild(createTRStudent(Article, cursor.key));
+					cursor.continue();
+
+				} else if (cursor.value.tip == "pantalon" && cursor.value.usuario == localStorage.getItem("usuario")) {
+
+					var Article = new Pantalon(cursor.value.num_serie, cursor.value.nombre, cursor.value.precio, cursor.value.iva, cursor.value.usuario, cursor.value.talla, cursor.value.color, cursor.value.ancho, cursor.value.largo);
+					students.push(Article); //ESO ES PARA QUE DESAPAREZCA NO HAY ALUMNOS EN DATABASE
+					tBody.appendChild(createTRStudent(Article, cursor.key));
+					cursor.continue();
+
+				} else if (cursor.value.tip == "zapatilla" && cursor.value.usuario == localStorage.getItem("usuario")) {
+
+					var Article = new Zapatilla(cursor.value.num_serie, cursor.value.nombre, cursor.value.precio, cursor.value.iva, cursor.value.usuario, cursor.value.numero, cursor.value.tipo);
+					students.push(Article); //ESO ES PARA QUE DESAPAREZCA NO HAY ALUMNOS EN DATABASE
+					tBody.appendChild(createTRStudent(Article, cursor.key));
+					cursor.continue();
+
 				} else {
 					cursor.continue();
-				}
-	
-				if (cursor.value.tip == "camiseta") {
-	
-				}
-	
-				if (cursor.value.tip == "pantalon") {
-	
-				}
-	
-				if (cursor.value.tip == "zapatilla") {
-	
 				}
 
 			}
 		};
-	
+
 	};
+
+	//BOTON BORRAR
+
+	document.getElementById("deleteproductButton").onclick = function (event) {
+		clearMessages();
+
+		var transaction = db.transaction(DB_STORE_NAME, "readwrite");
+
+
+		transaction.onerror = function (event) {
+			onError("Error. No se ha podido eliminar el estudiante: " + event.target.error);
+		};
+
+		var studentsObjectStore = transaction.objectStore(DB_STORE_NAME);
+		var request = studentsObjectStore.delete(Number(selectedStudentTR.dataset.studentKey));
+
+		request.onsuccess = function (event) {
+
+			var tBody = document.getElementsByTagName("tbody")[0];
+
+			tBody.removeChild(selectedStudentTR);
+
+
+
+			selectedStudentTR = null;
+
+			students.pop();
+
+			// MensajeTablavacia();
+
+		}
+
+	}
 
 	desbloquearaplicacion();
 }
@@ -1577,133 +1683,161 @@ var selectedStudentTR;
 
 // This is what our customer data looks like.
 
-	//Manejadores de error o éxito al abrir nuestra bases de datos
-	request.onerror = function (event) {
-	
-		onError("Error en la solicitud: " + event.target.error);
-		// document.getElementById("error").appendChild(document.createTextNode("Error en la solicitud: " + event.target.error + "<br/>"));
-	};
-	
-	request.onsuccess = function (event) {
-		// event.target hace referencia al objeto que lanzo el evento (base de datos)
-		db = event.target.result;
-		db.onerror = function (event) {
-			// Generic error handler for all errors targeted at this database's
-			// requests!
-			onError("Error en el acceso a la base de datos: " + event.target.error);
-			//document.getElementById("error").appendChild(document.createTextNode("Error en el acceso a la base de datos: " + event.target.error + "<br/>"));
-		};
-	
-		var studentsObjectStore = db.transaction(DB_STORE_NAME).objectStore(DB_STORE_NAME);
-		var tBody = document.getElementById("datagrid").getElementsByTagName("tbody")[0];
-	
-		studentsObjectStore.transaction.oncomplete = function (event) {
-	
-			MensajeTablavacia();
-	
-		}
-	
-		// studentsObjectStore.openCursor().onsuccess = function (event) {
-		// 	var cursor = event.target.result;
-	
-		// 	if (cursor) {
-		// 		console.log("casi");
-		// 		if (cursor.value.tip == "producto" && cursor.value.usuario == localStorage.getItem("usuario")) {
-		// 			console.log("he entrado");
-		// 			var Article = new Producto(cursor.value.num_serie, cursor.value.nombre, cursor.value.precio, cursor.value.iva, cursor.value.usuario);
-		// 			students.push(Article); //ESO ES PARA QUE DESAPAREZCA NO HAY ALUMNOS EN DATABASE
-		// 			tBody.appendChild(createTRStudent(Article, cursor.key));
-		// 			cursor.continue();
-		// 		}
-	
-		// 		if (cursor.value.tip == "camiseta") {
-	
-		// 		}
-	
-		// 		if (cursor.value.tip == "pantalon") {
-	
-		// 		}
-	
-		// 		if (cursor.value.tip == "zapatilla") {
-	
-		// 		}
-		// 		// var student = new Student(cursor.value.firstname, cursor.value.lastname1, cursor.value.specialty);
-		// 		// student.lastname2 = cursor.value.lastname2;
-		// 		// students.push(student); //ESO ES PARA QUE DESAPAREZCA NO HAY ALUMNOS EN DATABASE
-		// 		// tBody.appendChild(createTRStudent(student, cursor.key));
-		// 		// cursor.continue();
-		// 	}
-		// };
-	
+//Manejadores de error o éxito al abrir nuestra bases de datos
+request.onerror = function (event) {
+
+	onError("Error en la solicitud: " + event.target.error);
+	// document.getElementById("error").appendChild(document.createTextNode("Error en la solicitud: " + event.target.error + "<br/>"));
+};
+
+request.onsuccess = function (event) {
+	// event.target hace referencia al objeto que lanzo el evento (base de datos)
+	db = event.target.result;
+	db.onerror = function (event) {
+		// Generic error handler for all errors targeted at this database's
+		// requests!
+		onError("Error en el acceso a la base de datos: " + event.target.error);
+		//document.getElementById("error").appendChild(document.createTextNode("Error en el acceso a la base de datos: " + event.target.error + "<br/>"));
 	};
 
-	request.onupgradeneeded = function (event) {
-		db = event.target.result;
-		console.log("Event onupgradeneeded: " + db.name);
-	
-		try {
-			// Create an objectStore with autoincrement key    
-			var studentsObjectStore = db.createObjectStore(DB_STORE_NAME, { autoIncrement: true });
-			console.log("Student Object Store has been created");
-	
-			// Create an index to search customers by specialty
-			// studentsObjectStore.createIndex("specialty", "specialty", { unique: false });
-			// console.log("Index Specialty has been created");
-	
-			// Use transaction oncomplete to make sure the objectStore creation is 
-			// finished before adding data into it.
-			studentsObjectStore.transaction.oncomplete = function (event) {
-				// Store values in the newly created objectStore.
-				var studentsObjectStore = db.transaction(DB_STORE_NAME, "readwrite").objectStore(DB_STORE_NAME);
-				for (var i in studentsData) {
-					studentsObjectStore.add(studentsData[i].getObject());
-					console.log("Student add to object store: " + studentsData[i]);
-				}
+	var studentsObjectStore = db.transaction(DB_STORE_NAME).objectStore(DB_STORE_NAME);
+	var tBody = document.getElementById("datagrid").getElementsByTagName("tbody")[0];
+
+	studentsObjectStore.transaction.oncomplete = function (event) {
+
+		// MensajeTablavacia();
+
+	}
+
+	// studentsObjectStore.openCursor().onsuccess = function (event) {
+	// 	var cursor = event.target.result;
+
+	// 	if (cursor) {
+	// 		console.log("casi");
+	// 		if (cursor.value.tip == "producto" && cursor.value.usuario == localStorage.getItem("usuario")) {
+	// 			console.log("he entrado");
+	// 			var Article = new Producto(cursor.value.num_serie, cursor.value.nombre, cursor.value.precio, cursor.value.iva, cursor.value.usuario);
+	// 			students.push(Article); //ESO ES PARA QUE DESAPAREZCA NO HAY ALUMNOS EN DATABASE
+	// 			tBody.appendChild(createTRStudent(Article, cursor.key));
+	// 			cursor.continue();
+	// 		}
+
+	// 		if (cursor.value.tip == "camiseta") {
+
+	// 		}
+
+	// 		if (cursor.value.tip == "pantalon") {
+
+	// 		}
+
+	// 		if (cursor.value.tip == "zapatilla") {
+
+	// 		}
+	// 		// var student = new Student(cursor.value.firstname, cursor.value.lastname1, cursor.value.specialty);
+	// 		// student.lastname2 = cursor.value.lastname2;
+	// 		// students.push(student); //ESO ES PARA QUE DESAPAREZCA NO HAY ALUMNOS EN DATABASE
+	// 		// tBody.appendChild(createTRStudent(student, cursor.key));
+	// 		// cursor.continue();
+	// 	}
+	// };
+
+};
+
+request.onupgradeneeded = function (event) {
+	db = event.target.result;
+	console.log("Event onupgradeneeded: " + db.name);
+
+	try {
+		// Create an objectStore with autoincrement key    
+		var studentsObjectStore = db.createObjectStore(DB_STORE_NAME, { autoIncrement: true });
+		console.log("Student Object Store has been created");
+
+		// Create an index to search customers by specialty
+		// studentsObjectStore.createIndex("specialty", "specialty", { unique: false });
+		// console.log("Index Specialty has been created");
+
+		// Use transaction oncomplete to make sure the objectStore creation is 
+		// finished before adding data into it.
+		studentsObjectStore.transaction.oncomplete = function (event) {
+			// Store values in the newly created objectStore.
+			var studentsObjectStore = db.transaction(DB_STORE_NAME, "readwrite").objectStore(DB_STORE_NAME);
+			for (var i in studentsData) {
+				studentsObjectStore.add(studentsData[i].getObject());
+				console.log("Student add to object store: " + studentsData[i]);
 			}
-		} catch (e) {
-			console.log("Exception creating object store: " + e);
 		}
-	};
+	} catch (e) {
+		console.log("Exception creating object store: " + e);
+	}
+};
 
 
 function createTRStudent(Article, key) {
 
-	if (Article instanceof Producto) {
-		var studentTR = document.createElement("tr");
-		var studentTD1 = document.createElement("td");
-		studentTD1.appendChild(document.createTextNode(Article.num_serie));
-		var studentTD2 = document.createElement("td");
-		studentTD2.appendChild(document.createTextNode(Article.toString()));
+	// if (Article instanceof Producto) {
+	var studentTR = document.createElement("tr");
+	var studentTD1 = document.createElement("td");
+	studentTD1.appendChild(document.createTextNode(Article.num_serie));
+	var studentTD2 = document.createElement("td");
+	studentTD2.appendChild(document.createTextNode(Article.toString()));
 
 
-		studentTR.appendChild(studentTD1);
-		studentTR.appendChild(studentTD2);
+	studentTR.appendChild(studentTD1);
+	studentTR.appendChild(studentTD2);
 
 
-		studentTR.dataset.studentKey = key;
-		studentTR.dataset.student = Article;
+	studentTR.dataset.studentKey = key;
+	studentTR.dataset.student = Article;
 
-		studentTR.addEventListener("click", function (event) {
-			if (selectedStudentTR) {
-				selectedStudentTR.removeAttribute("class", "selected");
-			}
-			if (!selectedStudentTR || selectedStudentTR.dataset.studentKey != event.currentTarget.dataset.studentKey) {
-				event.currentTarget.setAttribute("class", "selected");
-				selectedStudentTR = event.currentTarget;
-			} else {
-				selectedStudentTR = null;
-			}
-		})
+	studentTR.addEventListener("click", function (event) {
+		if (selectedStudentTR) {
+			selectedStudentTR.removeAttribute("class", "selected");
+		}
+		if (!selectedStudentTR || selectedStudentTR.dataset.studentKey != event.currentTarget.dataset.studentKey) {
+			event.currentTarget.setAttribute("class", "selected");
+			selectedStudentTR = event.currentTarget;
+		} else {
+			selectedStudentTR = null;
+		}
+	})
 
-		return studentTR;
+	return studentTR;
 
-	} else if (Article instanceof Camiseta) {
+	// } else if (Article instanceof Camiseta) {
 
-	} else if (Article instanceof Pantalon) {
+	// 	var studentTR = document.createElement("tr");
+	// 	var studentTD1 = document.createElement("td");
+	// 	studentTD1.appendChild(document.createTextNode(Article.num_serie));
+	// 	var studentTD2 = document.createElement("td");
+	// 	studentTD2.appendChild(document.createTextNode(Article.toString()));
 
-	} else if (Article instanceof Zapatilla) {
 
-	}
+	// 	studentTR.appendChild(studentTD1);
+	// 	studentTR.appendChild(studentTD2);
+
+
+	// 	studentTR.dataset.studentKey = key;
+	// 	studentTR.dataset.student = Article;
+
+	// 	studentTR.addEventListener("click", function (event) {
+	// 		if (selectedStudentTR) {
+	// 			selectedStudentTR.removeAttribute("class", "selected");
+	// 		}
+	// 		if (!selectedStudentTR || selectedStudentTR.dataset.studentKey != event.currentTarget.dataset.studentKey) {
+	// 			event.currentTarget.setAttribute("class", "selected");
+	// 			selectedStudentTR = event.currentTarget;
+	// 		} else {
+	// 			selectedStudentTR = null;
+	// 		}
+	// 	})
+
+	// 	return studentTR;
+
+	// } else if (Article instanceof Pantalon) {
+
+	// } else if (Article instanceof Zapatilla) {
+
+	// }
 	// var studentTR = document.createElement("tr");
 	// var studentTD1 = document.createElement("td");
 	// studentTD1.appendChild(document.createTextNode(Article.firstname));
@@ -1774,39 +1908,7 @@ function createTRStudent(Article, key) {
 // };
 // }
 
-//BOTON BORRAR
 
-document.getElementById("deleteStudentButton").onclick = function (event) {
-	clearMessages();
-
-	var transaction = db.transaction(DB_STORE_NAME, "readwrite");
-
-
-	transaction.onerror = function (event) {
-		onError("Error. No se ha podido eliminar el estudiante: " + event.target.error);
-	};
-
-	var studentsObjectStore = transaction.objectStore(DB_STORE_NAME);
-	var request = studentsObjectStore.delete(Number(selectedStudentTR.dataset.studentKey));
-
-	request.onsuccess = function (event) {
-
-		var tBody = document.getElementsByTagName("tbody")[0];
-
-		tBody.removeChild(selectedStudentTR);
-
-
-
-		selectedStudentTR = null;
-		clearStudentForm();
-
-		students.pop();
-
-		MensajeTablavacia();
-
-	}
-
-}
 
 
 function clearMessages() {
@@ -1814,20 +1916,28 @@ function clearMessages() {
 	// document.getElementById("result").innerHTML = "";
 }
 
-function MensajeTablavacia() {
+// function MensajeTablavacia() {
 
-	if (students.length === 0) {
-		var tBody = document.getElementsByTagName("tbody")[0];
-		var tr = document.createElement("tr");
-		var td = document.createElement("td");
-		td.setAttribute("colspan", "4");
-		td.setAttribute("style", "text-align:center");
-		td.appendChild(document.createTextNode("No existen articulos en su carrito"));
-		tr.appendChild(td);
-		tBody.appendChild(tr);
-	}
+// 	var td = document.getElementsByTagName("td")[0];
+// 	var td1 = document.getElementsByTagName("td")[1];
 
-}
+// 	console.log(td);
+// 	console.log(td.value);
+
+// 	if (td === undefined) {
+// 		var tBody = document.getElementsByTagName("tbody")[0];
+// 		var tr = document.createElement("tr");
+// 		var td = document.createElement("td");
+// 		td.setAttribute("colspan", "4");
+// 		td.setAttribute("style", "text-align:center");
+// 		td.appendChild(document.createTextNode("No existen articulos en su carrito"));
+// 		tr.appendChild(td);
+// 		tBody.appendChild(tr);
+// 	}else if(td !== undefined && td1 !== undefined && td.value === "No existen articulos en su carrito"){
+// 		td.remove();
+// 	}
+
+// }
 function onError(error) {
 	document.getElementById("error").appendChild(document.createTextNode(error));
 	document.getElementById("error").appendChild(document.createElement("br"));
