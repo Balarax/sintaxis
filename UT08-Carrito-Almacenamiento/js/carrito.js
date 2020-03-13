@@ -1516,11 +1516,10 @@ function closesesionwindow() {
 }
 
 /*
-Función que se encarga de guardar el usuario introducido desde la ventana de sesion en el navegador
+Función que se encarga de guardar el usuario introducido desde la ventana de sesion en el navegador, y cargar los datos de su carrito si estos existieran
 
 @version 3.0
 */
-
 
 function iniciosesion() {
 
@@ -1599,6 +1598,12 @@ function iniciosesion() {
 	document.getElementById("deleteproductButton").onclick = function (event) {
 		clearMessages();
 
+		// removeItemFromArr(carritocompra.items,Number(selectedStudentTR.dataset.studentKey))
+		// removeItemFromArr(carritocompra.cantidades,Number(selectedStudentTR.dataset.studentKey))
+
+		// MostrarContadores();
+		EliminarArticulo(1);
+
 		var transaction = db.transaction(DB_STORE_NAME, "readwrite");
 
 
@@ -1615,13 +1620,7 @@ function iniciosesion() {
 
 			tBody.removeChild(selectedStudentTR);
 
-
-
 			selectedStudentTR = null;
-
-			students.pop();
-
-			// MensajeTablavacia();
 
 		}
 
@@ -1670,6 +1669,8 @@ function desbloquearaplicacion() {
 
 }
 
+//PARTE CREACION INDEXEDDB
+
 const DB_NAME = 'CarritoDB';
 const DB_VERSION = 3;
 const DB_STORE_NAME = 'productos';
@@ -1709,38 +1710,6 @@ request.onsuccess = function (event) {
 
 	}
 
-	// studentsObjectStore.openCursor().onsuccess = function (event) {
-	// 	var cursor = event.target.result;
-
-	// 	if (cursor) {
-	// 		console.log("casi");
-	// 		if (cursor.value.tip == "producto" && cursor.value.usuario == localStorage.getItem("usuario")) {
-	// 			console.log("he entrado");
-	// 			var Article = new Producto(cursor.value.num_serie, cursor.value.nombre, cursor.value.precio, cursor.value.iva, cursor.value.usuario);
-	// 			students.push(Article); //ESO ES PARA QUE DESAPAREZCA NO HAY ALUMNOS EN DATABASE
-	// 			tBody.appendChild(createTRStudent(Article, cursor.key));
-	// 			cursor.continue();
-	// 		}
-
-	// 		if (cursor.value.tip == "camiseta") {
-
-	// 		}
-
-	// 		if (cursor.value.tip == "pantalon") {
-
-	// 		}
-
-	// 		if (cursor.value.tip == "zapatilla") {
-
-	// 		}
-	// 		// var student = new Student(cursor.value.firstname, cursor.value.lastname1, cursor.value.specialty);
-	// 		// student.lastname2 = cursor.value.lastname2;
-	// 		// students.push(student); //ESO ES PARA QUE DESAPAREZCA NO HAY ALUMNOS EN DATABASE
-	// 		// tBody.appendChild(createTRStudent(student, cursor.key));
-	// 		// cursor.continue();
-	// 	}
-	// };
-
 };
 
 request.onupgradeneeded = function (event) {
@@ -1751,10 +1720,6 @@ request.onupgradeneeded = function (event) {
 		// Create an objectStore with autoincrement key    
 		var studentsObjectStore = db.createObjectStore(DB_STORE_NAME, { autoIncrement: true });
 		console.log("Student Object Store has been created");
-
-		// Create an index to search customers by specialty
-		// studentsObjectStore.createIndex("specialty", "specialty", { unique: false });
-		// console.log("Index Specialty has been created");
 
 		// Use transaction oncomplete to make sure the objectStore creation is 
 		// finished before adding data into it.
@@ -1802,113 +1767,7 @@ function createTRStudent(Article, key) {
 	})
 
 	return studentTR;
-
-	// } else if (Article instanceof Camiseta) {
-
-	// 	var studentTR = document.createElement("tr");
-	// 	var studentTD1 = document.createElement("td");
-	// 	studentTD1.appendChild(document.createTextNode(Article.num_serie));
-	// 	var studentTD2 = document.createElement("td");
-	// 	studentTD2.appendChild(document.createTextNode(Article.toString()));
-
-
-	// 	studentTR.appendChild(studentTD1);
-	// 	studentTR.appendChild(studentTD2);
-
-
-	// 	studentTR.dataset.studentKey = key;
-	// 	studentTR.dataset.student = Article;
-
-	// 	studentTR.addEventListener("click", function (event) {
-	// 		if (selectedStudentTR) {
-	// 			selectedStudentTR.removeAttribute("class", "selected");
-	// 		}
-	// 		if (!selectedStudentTR || selectedStudentTR.dataset.studentKey != event.currentTarget.dataset.studentKey) {
-	// 			event.currentTarget.setAttribute("class", "selected");
-	// 			selectedStudentTR = event.currentTarget;
-	// 		} else {
-	// 			selectedStudentTR = null;
-	// 		}
-	// 	})
-
-	// 	return studentTR;
-
-	// } else if (Article instanceof Pantalon) {
-
-	// } else if (Article instanceof Zapatilla) {
-
-	// }
-	// var studentTR = document.createElement("tr");
-	// var studentTD1 = document.createElement("td");
-	// studentTD1.appendChild(document.createTextNode(Article.firstname));
-	// var studentTD2 = document.createElement("td");
-	// studentTD2.appendChild(document.createTextNode(Article.lastname1));
-	// var studentTD3 = document.createElement("td");
-	// studentTD3.appendChild(document.createTextNode(Article.lastname2));
-	// var studentTD4 = document.createElement("td");
-	// studentTD4.appendChild(document.createTextNode(Article.specialty));
-
-	// studentTR.appendChild(studentTD1);
-	// studentTR.appendChild(studentTD2);
-	// studentTR.appendChild(studentTD3);
-	// studentTR.appendChild(studentTD4);
-
-	// studentTR.dataset.studentKey = key;
-	// studentTR.dataset.student = Article;
-
-	// studentTR.addEventListener("click", function (event) {
-	// 	if (selectedStudentTR) {
-	// 		selectedStudentTR.removeAttribute("class", "selected");
-	// 	}
-	// 	if (!selectedStudentTR || selectedStudentTR.dataset.studentKey != event.currentTarget.dataset.studentKey) {
-	// 		event.currentTarget.setAttribute("class", "selected");
-	// 		fillStudentForm(event.currentTarget);
-	// 		selectedStudentTR = event.currentTarget;
-	// 	} else {
-	// 		clearStudentForm();
-	// 		selectedStudentTR = null;
-	// 	}
-	// })
-
-	// return studentTR;
 }
-
-//Se activa cuando se carga una BD con una versión mayor a la almacenada actualmente o no existen la BD
-
-
-// BOTON AÑADIR
-// function aniadirdb() {
-
-// document.getElementById("confirmbutton").onclick = function (event) {
-// 	clearMessages();
-
-// 	var transaction = db.transaction([DB_STORE_NAME], "readwrite");
-// 	transaction.onerror = function (event) {
-// 		onError("Error. No se ha creado el estudiante en la base de datos: " + event.target.error);
-// 		// document.getElementById("error").appendChild(document.createTextNode("Error. No se ha creado el estudiante en la base de datos: " + event.target.error + "<br/>"));
-// 	};
-
-// 	var studentsObjectStore = transaction.objectStore(DB_STORE_NAME);
-// 	var student = new Student(event.target.elements["firstname"].value, event.target.elements["lastname1"].value, event.target.elements["specialty"].value);
-// 	student.lastname2 = event.target.elements["lastname2"].value;
-
-// 	// I add the new Student to object store
-// 	// Number(selectedStudentTR.dataset.studentKey)
-// 	var request = studentsObjectStore.add(student.getObject());
-// 	request.onsuccess = function (event) {
-// 		document.getElementById("result").appendChild(document.createTextNode("Se ha creado el nuevo estudiante: " + student));
-// 		console.log("Student add to object store: " + student + " with key " + event.target.result);
-
-// 		var tBody = document.getElementsByTagName("tbody")[0];
-// 		tBody.appendChild(createTRStudent(student, event.target.result));
-// 	};
-
-// 	// I cancel the submit event not to send the form.
-// 	event.preventDefault();
-// };
-// }
-
-
 
 
 function clearMessages() {
@@ -1916,28 +1775,6 @@ function clearMessages() {
 	// document.getElementById("result").innerHTML = "";
 }
 
-// function MensajeTablavacia() {
-
-// 	var td = document.getElementsByTagName("td")[0];
-// 	var td1 = document.getElementsByTagName("td")[1];
-
-// 	console.log(td);
-// 	console.log(td.value);
-
-// 	if (td === undefined) {
-// 		var tBody = document.getElementsByTagName("tbody")[0];
-// 		var tr = document.createElement("tr");
-// 		var td = document.createElement("td");
-// 		td.setAttribute("colspan", "4");
-// 		td.setAttribute("style", "text-align:center");
-// 		td.appendChild(document.createTextNode("No existen articulos en su carrito"));
-// 		tr.appendChild(td);
-// 		tBody.appendChild(tr);
-// 	}else if(td !== undefined && td1 !== undefined && td.value === "No existen articulos en su carrito"){
-// 		td.remove();
-// 	}
-
-// }
 function onError(error) {
 	document.getElementById("error").appendChild(document.createTextNode(error));
 	document.getElementById("error").appendChild(document.createElement("br"));
