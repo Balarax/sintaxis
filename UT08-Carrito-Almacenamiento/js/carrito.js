@@ -33,11 +33,13 @@ class Carrito {
 }
 
 class Producto {
-	constructor(num_serie, nombre, precio, iva) {
+	constructor(num_serie, nombre, precio, iva, usuario) {
 		this.num_serie = num_serie;
 		this.nombre = nombre;
 		this.precio = precio || 0;
 		this.iva = iva || 0;
+		this.usuario = usuario;
+		this.tip = "producto";
 	}
 
 	get num_serie() {
@@ -65,16 +67,42 @@ class Producto {
 		this._iva = value;
 	}
 
+	get usuario() {
+		return this._usuario;
+	}
+	set usuario(value) {
+		this._usuario = value;
+	}
+
+	get tip() {
+		return this._tip;
+	}
+	set tip(value) {
+		this._tip = value;
+	}
+
 	toString() {
-		return this.num_serie + " " + this.nombre + " " + this.precio + " " + this.iva;
+		return "Nombre: " + this.nombre + " Precio: " + this.precio + " Iva: " + this.iva + "%";
 	}
 }
 
+	Producto.prototype.getObject = function() {
+	return {
+	num_serie: this.num_serie,
+	nombre: this.nombre,
+	precio: this.precio,
+	iva: this.iva,
+	usuario: this.usuario,
+	tip: this.tip
+};
+}
+
 class Camiseta extends Producto {
-	constructor(num_serie, nombre, precio, iva, talla, color) {
-		super(num_serie, nombre, precio, iva);
+	constructor(num_serie, nombre, precio, iva, usuario, talla, color) {
+		super(num_serie, nombre, precio, iva, usuario);
 		this.talla = talla;
 		this.color = color || "";
+		this.tip = "camiseta";
 	}
 
 	get talla() {
@@ -90,18 +118,35 @@ class Camiseta extends Producto {
 		this._color = value;
 	}
 
+	get tip() {
+		return this._tip;
+	}
+
 	toString() {
-		return this.num_serie + " " + this.nombre + " " + this.precio + " " + this.iva + " " + this.talla + " " + this.color;
+		return "Nombre: " + this.nombre + " Precio: " + this.precio + " Iva: " + this.iva + "% Talla: " + this.talla + " Color: " + this.color;
 	}
 }
 
+	Camiseta.prototype.getObject = function() {
+	return {
+	num_serie: this.num_serie,
+	nombre: this.nombre,
+	precio: this.precio,
+	iva: this.iva,
+	usuario: this.usuario,
+	talla: this.talla,
+	color: this.color
+};
+}
+
 class Pantalon extends Producto {
-	constructor(num_serie, nombre, precio, iva, talla, color, ancho, largo) {
-		super(num_serie, nombre, precio, iva);
+	constructor(num_serie, nombre, precio, iva, usuario, talla, color, ancho, largo) {
+		super(num_serie, nombre, precio, iva, usuario);
 		this.talla = talla;
 		this.color = color || "";
 		this.ancho = ancho || 0;
 		this.largo = largo || 0;
+		this.tip = "pantalon";
 	}
 
 	get talla() {
@@ -129,16 +174,35 @@ class Pantalon extends Producto {
 		this._largo = value;
 	}
 
+	get tip() {
+		return this._tip;
+	}
+
 	toString() {
-		return this.num_serie + " " + this.nombre + " " + this.precio + " " + this.iva + " " + this.talla + " " + this.color + " " + this.ancho + " " + this.largo;
+		return "Nombre: " + this.nombre + " Precio: " + this.precio + " Iva: " + this.iva + "% Talla: " + this.talla + " Color: " + this.color + " Ancho: " + this.ancho + " Largo: " + this.largo;
 	}
 }
 
+	Pantalon.prototype.getObject = function() {
+	return {
+	num_serie: this.num_serie,
+	nombre: this.nombre,
+	precio: this.precio,
+	iva: this.iva,
+	usuario: this.usuario,
+	talla: this.talla,
+	color: this.color,
+	ancho: this.ancho,
+	largo: this.largo
+};
+}
+
 class Zapatilla extends Producto {
-	constructor(num_serie, nombre, precio, iva, numero, tipo) {
-		super(num_serie, nombre, precio, iva);
+	constructor(num_serie, nombre, precio, iva, usuario, numero, tipo) {
+		super(num_serie, nombre, precio, iva, usuario);
 		this.numero = numero;
 		this.tipo = tipo;
+		this.tip = "zapatilla";
 	}
 
 	get numero() {
@@ -154,9 +218,25 @@ class Zapatilla extends Producto {
 		this._tipo = value;
 	}
 
-	toString() {
-		return this.num_serie + " " + this.nombre + " " + this.precio + " " + this.iva + " " + this.numero + " " + this.tipo;
+	get tip() {
+		return this._tip;
 	}
+
+	toString() {
+		return "Nombre: " + this.nombre + " Precio: " + this.precio + " Iva: " + this.iva + "% Numero: " + this.numero + " Tipo: " + this.tipo;
+	}
+}
+
+	Zapatilla.prototype.getObject = function() {
+	return {
+	num_serie: this.num_serie,
+	nombre: this.nombre,
+	precio: this.precio,
+	iva: this.iva,
+	usuario: this.usuario,
+	numero: this.numero,
+	tipo: this.tipo
+};
 }
 
 var carritocompra = new Carrito(1, [], []);
@@ -164,6 +244,8 @@ var carritocompra = new Carrito(1, [], []);
 /*VARIABLES GLOBALES:*/
 
 var TotalArticulos = 0;
+
+
 
 /*FUNCIONES QUE SE VAN A EJECUTAR AL INICIAR LA PÁGINA:*/
 
@@ -465,9 +547,12 @@ function Anadir(producto, confirmacion) {
 				Article.num_serie = num_serie;
 				Article.nombre = nombre;
 				Article.iva = 10;
+				Article.usuario = localStorage.getItem("usuario");
 				Article.precio = precio;
 				Article.talla = talla;
 				Article.color = color;
+
+				console.log(Article);
 
 				carritocompra.items.push(Article);
 				carritocompra.cantidades.push(cantidad);
@@ -512,11 +597,14 @@ function Anadir(producto, confirmacion) {
 				Article.num_serie = num_serie;
 				Article.nombre = nombre;
 				Article.iva = 10;
+				Article.usuario = localStorage.getItem("usuario");
 				Article.precio = precio;
 				Article.talla = talla;
 				Article.color = color;
 				Article.ancho = ancho;
 				Article.largo = largo;
+
+				console.log(Article);
 
 				carritocompra.items.push(Article);
 				carritocompra.cantidades.push(cantidad);
@@ -553,9 +641,12 @@ function Anadir(producto, confirmacion) {
 				Article.num_serie = num_serie;
 				Article.nombre = nombre;
 				Article.iva = 4;
+				Article.usuario = localStorage.getItem("usuario");
 				Article.precio = precio;
 				Article.numero = numero;
 				Article.tipo = tipo;
+
+				console.log(Article);
 
 				carritocompra.items.push(Article);
 				carritocompra.cantidades.push(cantidad);
@@ -597,6 +688,9 @@ function Anadir(producto, confirmacion) {
 				Article.nombre = nombre;
 				Article.iva = iva;
 				Article.precio = precio;
+				Article.usuario = localStorage.getItem("usuario");
+
+				console.log(Article);
 
 				carritocompra.items.push(Article);
 				carritocompra.cantidades.push(cantidad);
@@ -628,10 +722,75 @@ function GenerarCampos(tipo) {
 
 	var confirmbutton = document.createElement("button");
 	confirmbutton.setAttribute("class", "btn btn-secondary"); //Atributo para mejorar apariencia con boostrap
+	confirmbutton.setAttribute("id", "confirmbutton"); //Atributo para mejorar apariencia con boostrap
 	confirmbutton.appendChild(document.createTextNode("Confirmar"));
-	confirmbutton.addEventListener("click", function () {  //Importantisimo, en el boton, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 1" para que añada articulos
+	confirmbutton.addEventListener("click", function (event) {  //Importantisimo, en el boton, cuando llamamos a la funcion, esta tiene que ejecutarse en "modo 1" para que añada articulos
 		ValidarCampos(1);
+
+
+		clearMessages();
+
+		var transaction = db.transaction([DB_STORE_NAME], "readwrite");
+		transaction.onerror = function (event) {
+			onError("Error. No se ha creado el producto en la base de datos: " + event.target.error);
+			// document.getElementById("error").appendChild(document.createTextNode("Error. No se ha creado el estudiante en la base de datos: " + event.target.error + "<br/>"));
+		};
+
+		var studentsObjectStore = transaction.objectStore(DB_STORE_NAME);
+
+		if (tipo == "Producto") {
+
+			// var producto = new Producto(event.target.elements["num_serie"].value, event.target.elements["nombre"].value, event.target.elements["precio"].value,event.target.elements["iva"].value,event.target.elements["usuario"].value);
+			var producto = new Producto(document.getElementById("Num_serie").value, document.getElementById("Nombre").value, document.getElementById("Precio").value, document.getElementById("Iva").value, localStorage.getItem("usuario"));
+			producto.tip = "producto";
+			// I add the new Student to object store
+			// Number(selectedStudentTR.dataset.studentKey)
+			var request = studentsObjectStore.add(producto.getObject());
+			request.onsuccess = function (event) {
+				console.log("Student add to object store: " + producto + " with key " + event.target.result);
+
+				var tBody = document.getElementsByTagName("tbody")[0];
+				tBody.appendChild(createTRStudent(producto, event.target.result));
+			};
+
+			// I cancel the submit event not to send the form.
+			// event.preventDefault();
+
+		}
+
+
+		// var student = new Student(event.target.elements["firstname"].value, event.target.elements["lastname1"].value, event.target.elements["specialty"].value);
+		// student.lastname2 = event.target.elements["lastname2"].value;
+
+		// // I add the new Student to object store
+		// // Number(selectedStudentTR.dataset.studentKey)
+		// var request = studentsObjectStore.add(student.getObject());
+		// request.onsuccess = function (event) {
+		// 	document.getElementById("result").appendChild(document.createTextNode("Se ha creado el nuevo estudiante: " + student));
+		// 	console.log("Student add to object store: " + student + " with key " + event.target.result);
+
+		// 	var tBody = document.getElementsByTagName("tbody")[0];
+		// 	tBody.appendChild(createTRStudent(student, event.target.result));
+		// };
+
+		// // I cancel the submit event not to send the form.
+		// event.preventDefault();
+
 	});
+
+	// confirmbutton.addEventListener("keyup", function () {
+		
+	// 	var error = document.getElementById("ControlDeErrores");
+	// 	var button = document.getElementById("confirmbutton");
+
+	// 	if (error === "") {
+	// 		button.disabled = false;
+	// 	} else {
+	// 		button.disabled = true;
+	// 	}
+
+
+	// });
 
 	var campos = new Array();
 
@@ -1304,8 +1463,63 @@ Función que se encarga de guardar el usuario introducido desde la ventana de se
 @version 3.0
 */
 
+
 function iniciosesion() {
+
 	localStorage.setItem("usuario", sesionwindow.document.getElementById("sesionuser").value);
+
+	var request = indexedDB.open(DB_NAME, DB_VERSION);
+
+	request.onerror = function (event) {
+	
+		onError("Error en la solicitud: " + event.target.error);
+		// document.getElementById("error").appendChild(document.createTextNode("Error en la solicitud: " + event.target.error + "<br/>"));
+	};
+	
+	request.onsuccess = function (event) {
+		// event.target hace referencia al objeto que lanzo el evento (base de datos)
+		db = event.target.result;
+		db.onerror = function (event) {
+			// Generic error handler for all errors targeted at this database's
+			// requests!
+			onError("Error en el acceso a la base de datos: " + event.target.error);
+			//document.getElementById("error").appendChild(document.createTextNode("Error en el acceso a la base de datos: " + event.target.error + "<br/>"));
+		};
+	
+		var studentsObjectStore = db.transaction(DB_STORE_NAME).objectStore(DB_STORE_NAME);
+		var tBody = document.getElementById("datagrid").getElementsByTagName("tbody")[0];
+	
+		studentsObjectStore.openCursor().onsuccess = function (event) {
+			var cursor = event.target.result;
+
+			if (cursor) {
+				console.log("casi");
+				if (cursor.value.tip == "producto" && cursor.value.usuario == localStorage.getItem("usuario")) {
+					console.log("he entrado");
+					var Article = new Producto(cursor.value.num_serie, cursor.value.nombre, cursor.value.precio, cursor.value.iva, cursor.value.usuario);
+					students.push(Article); //ESO ES PARA QUE DESAPAREZCA NO HAY ALUMNOS EN DATABASE
+					tBody.appendChild(createTRStudent(Article, cursor.key));
+					cursor.continue();
+				} else {
+					cursor.continue();
+				}
+	
+				if (cursor.value.tip == "camiseta") {
+	
+				}
+	
+				if (cursor.value.tip == "pantalon") {
+	
+				}
+	
+				if (cursor.value.tip == "zapatilla") {
+	
+				}
+
+			}
+		};
+	
+	};
 
 	desbloquearaplicacion();
 }
@@ -1350,10 +1564,9 @@ function desbloquearaplicacion() {
 
 }
 
-function database(){
-const DB_NAME = 'UT08alumnos';
+const DB_NAME = 'CarritoDB';
 const DB_VERSION = 3;
-const DB_STORE_NAME = 'students';
+const DB_STORE_NAME = 'productos';
 const studentsData = [];
 
 var db;
@@ -1362,43 +1575,260 @@ var request = indexedDB.open(DB_NAME, DB_VERSION);
 var students = [];
 var selectedStudentTR;
 
-//Manejadores de error o éxito al abrir nuestra bases de datos
-request.onerror = function (event) {
+// This is what our customer data looks like.
 
-  onError("Error en la solicitud: " + event.target.error);
-  // document.getElementById("error").appendChild(document.createTextNode("Error en la solicitud: " + event.target.error + "<br/>"));
-};
+	//Manejadores de error o éxito al abrir nuestra bases de datos
+	request.onerror = function (event) {
+	
+		onError("Error en la solicitud: " + event.target.error);
+		// document.getElementById("error").appendChild(document.createTextNode("Error en la solicitud: " + event.target.error + "<br/>"));
+	};
+	
+	request.onsuccess = function (event) {
+		// event.target hace referencia al objeto que lanzo el evento (base de datos)
+		db = event.target.result;
+		db.onerror = function (event) {
+			// Generic error handler for all errors targeted at this database's
+			// requests!
+			onError("Error en el acceso a la base de datos: " + event.target.error);
+			//document.getElementById("error").appendChild(document.createTextNode("Error en el acceso a la base de datos: " + event.target.error + "<br/>"));
+		};
+	
+		var studentsObjectStore = db.transaction(DB_STORE_NAME).objectStore(DB_STORE_NAME);
+		var tBody = document.getElementById("datagrid").getElementsByTagName("tbody")[0];
+	
+		studentsObjectStore.transaction.oncomplete = function (event) {
+	
+			MensajeTablavacia();
+	
+		}
+	
+		// studentsObjectStore.openCursor().onsuccess = function (event) {
+		// 	var cursor = event.target.result;
+	
+		// 	if (cursor) {
+		// 		console.log("casi");
+		// 		if (cursor.value.tip == "producto" && cursor.value.usuario == localStorage.getItem("usuario")) {
+		// 			console.log("he entrado");
+		// 			var Article = new Producto(cursor.value.num_serie, cursor.value.nombre, cursor.value.precio, cursor.value.iva, cursor.value.usuario);
+		// 			students.push(Article); //ESO ES PARA QUE DESAPAREZCA NO HAY ALUMNOS EN DATABASE
+		// 			tBody.appendChild(createTRStudent(Article, cursor.key));
+		// 			cursor.continue();
+		// 		}
+	
+		// 		if (cursor.value.tip == "camiseta") {
+	
+		// 		}
+	
+		// 		if (cursor.value.tip == "pantalon") {
+	
+		// 		}
+	
+		// 		if (cursor.value.tip == "zapatilla") {
+	
+		// 		}
+		// 		// var student = new Student(cursor.value.firstname, cursor.value.lastname1, cursor.value.specialty);
+		// 		// student.lastname2 = cursor.value.lastname2;
+		// 		// students.push(student); //ESO ES PARA QUE DESAPAREZCA NO HAY ALUMNOS EN DATABASE
+		// 		// tBody.appendChild(createTRStudent(student, cursor.key));
+		// 		// cursor.continue();
+		// 	}
+		// };
+	
+	};
 
-request.onsuccess = function (event) {
-  // event.target hace referencia al objeto que lanzo el evento (base de datos)
-  db = event.target.result;
-  db.onerror = function (event) {
-    // Generic error handler for all errors targeted at this database's
-    // requests!
-    onError("Error en el acceso a la base de datos: " + event.target.error);
-    //document.getElementById("error").appendChild(document.createTextNode("Error en el acceso a la base de datos: " + event.target.error + "<br/>"));
-  };
+	request.onupgradeneeded = function (event) {
+		db = event.target.result;
+		console.log("Event onupgradeneeded: " + db.name);
+	
+		try {
+			// Create an objectStore with autoincrement key    
+			var studentsObjectStore = db.createObjectStore(DB_STORE_NAME, { autoIncrement: true });
+			console.log("Student Object Store has been created");
+	
+			// Create an index to search customers by specialty
+			// studentsObjectStore.createIndex("specialty", "specialty", { unique: false });
+			// console.log("Index Specialty has been created");
+	
+			// Use transaction oncomplete to make sure the objectStore creation is 
+			// finished before adding data into it.
+			studentsObjectStore.transaction.oncomplete = function (event) {
+				// Store values in the newly created objectStore.
+				var studentsObjectStore = db.transaction(DB_STORE_NAME, "readwrite").objectStore(DB_STORE_NAME);
+				for (var i in studentsData) {
+					studentsObjectStore.add(studentsData[i].getObject());
+					console.log("Student add to object store: " + studentsData[i]);
+				}
+			}
+		} catch (e) {
+			console.log("Exception creating object store: " + e);
+		}
+	};
 
-  var studentsObjectStore = db.transaction(DB_STORE_NAME).objectStore(DB_STORE_NAME);
-  var tBody = document.getElementById("datagrid").getElementsByTagName("tbody")[0];
 
-  studentsObjectStore.transaction.oncomplete = function (event) {
+function createTRStudent(Article, key) {
 
-    MensajeTablavacia();
+	if (Article instanceof Producto) {
+		var studentTR = document.createElement("tr");
+		var studentTD1 = document.createElement("td");
+		studentTD1.appendChild(document.createTextNode(Article.num_serie));
+		var studentTD2 = document.createElement("td");
+		studentTD2.appendChild(document.createTextNode(Article.toString()));
 
-  }
 
-  studentsObjectStore.openCursor().onsuccess = function (event) {
-    var cursor = event.target.result;
+		studentTR.appendChild(studentTD1);
+		studentTR.appendChild(studentTD2);
 
-    if (cursor) {
-      var producto = new Producto(cursor.value.num_serie, cursor.value.nombre, cursor.value.precio);
-      student.lastname2 = cursor.value.lastname2;
-      students.push(student); //ESO ES PARA QUE DESAPAREZCA NO HAY ALUMNOS EN DATABASE
-      tBody.appendChild(createTRStudent(student, cursor.key));
-      cursor.continue();
-    }
-  };
 
-};
+		studentTR.dataset.studentKey = key;
+		studentTR.dataset.student = Article;
+
+		studentTR.addEventListener("click", function (event) {
+			if (selectedStudentTR) {
+				selectedStudentTR.removeAttribute("class", "selected");
+			}
+			if (!selectedStudentTR || selectedStudentTR.dataset.studentKey != event.currentTarget.dataset.studentKey) {
+				event.currentTarget.setAttribute("class", "selected");
+				selectedStudentTR = event.currentTarget;
+			} else {
+				selectedStudentTR = null;
+			}
+		})
+
+		return studentTR;
+
+	} else if (Article instanceof Camiseta) {
+
+	} else if (Article instanceof Pantalon) {
+
+	} else if (Article instanceof Zapatilla) {
+
+	}
+	// var studentTR = document.createElement("tr");
+	// var studentTD1 = document.createElement("td");
+	// studentTD1.appendChild(document.createTextNode(Article.firstname));
+	// var studentTD2 = document.createElement("td");
+	// studentTD2.appendChild(document.createTextNode(Article.lastname1));
+	// var studentTD3 = document.createElement("td");
+	// studentTD3.appendChild(document.createTextNode(Article.lastname2));
+	// var studentTD4 = document.createElement("td");
+	// studentTD4.appendChild(document.createTextNode(Article.specialty));
+
+	// studentTR.appendChild(studentTD1);
+	// studentTR.appendChild(studentTD2);
+	// studentTR.appendChild(studentTD3);
+	// studentTR.appendChild(studentTD4);
+
+	// studentTR.dataset.studentKey = key;
+	// studentTR.dataset.student = Article;
+
+	// studentTR.addEventListener("click", function (event) {
+	// 	if (selectedStudentTR) {
+	// 		selectedStudentTR.removeAttribute("class", "selected");
+	// 	}
+	// 	if (!selectedStudentTR || selectedStudentTR.dataset.studentKey != event.currentTarget.dataset.studentKey) {
+	// 		event.currentTarget.setAttribute("class", "selected");
+	// 		fillStudentForm(event.currentTarget);
+	// 		selectedStudentTR = event.currentTarget;
+	// 	} else {
+	// 		clearStudentForm();
+	// 		selectedStudentTR = null;
+	// 	}
+	// })
+
+	// return studentTR;
+}
+
+//Se activa cuando se carga una BD con una versión mayor a la almacenada actualmente o no existen la BD
+
+
+// BOTON AÑADIR
+// function aniadirdb() {
+
+// document.getElementById("confirmbutton").onclick = function (event) {
+// 	clearMessages();
+
+// 	var transaction = db.transaction([DB_STORE_NAME], "readwrite");
+// 	transaction.onerror = function (event) {
+// 		onError("Error. No se ha creado el estudiante en la base de datos: " + event.target.error);
+// 		// document.getElementById("error").appendChild(document.createTextNode("Error. No se ha creado el estudiante en la base de datos: " + event.target.error + "<br/>"));
+// 	};
+
+// 	var studentsObjectStore = transaction.objectStore(DB_STORE_NAME);
+// 	var student = new Student(event.target.elements["firstname"].value, event.target.elements["lastname1"].value, event.target.elements["specialty"].value);
+// 	student.lastname2 = event.target.elements["lastname2"].value;
+
+// 	// I add the new Student to object store
+// 	// Number(selectedStudentTR.dataset.studentKey)
+// 	var request = studentsObjectStore.add(student.getObject());
+// 	request.onsuccess = function (event) {
+// 		document.getElementById("result").appendChild(document.createTextNode("Se ha creado el nuevo estudiante: " + student));
+// 		console.log("Student add to object store: " + student + " with key " + event.target.result);
+
+// 		var tBody = document.getElementsByTagName("tbody")[0];
+// 		tBody.appendChild(createTRStudent(student, event.target.result));
+// 	};
+
+// 	// I cancel the submit event not to send the form.
+// 	event.preventDefault();
+// };
+// }
+
+//BOTON BORRAR
+
+document.getElementById("deleteStudentButton").onclick = function (event) {
+	clearMessages();
+
+	var transaction = db.transaction(DB_STORE_NAME, "readwrite");
+
+
+	transaction.onerror = function (event) {
+		onError("Error. No se ha podido eliminar el estudiante: " + event.target.error);
+	};
+
+	var studentsObjectStore = transaction.objectStore(DB_STORE_NAME);
+	var request = studentsObjectStore.delete(Number(selectedStudentTR.dataset.studentKey));
+
+	request.onsuccess = function (event) {
+
+		var tBody = document.getElementsByTagName("tbody")[0];
+
+		tBody.removeChild(selectedStudentTR);
+
+
+
+		selectedStudentTR = null;
+		clearStudentForm();
+
+		students.pop();
+
+		MensajeTablavacia();
+
+	}
+
+}
+
+
+function clearMessages() {
+	document.getElementById("error").innerHTML = "";
+	// document.getElementById("result").innerHTML = "";
+}
+
+function MensajeTablavacia() {
+
+	if (students.length === 0) {
+		var tBody = document.getElementsByTagName("tbody")[0];
+		var tr = document.createElement("tr");
+		var td = document.createElement("td");
+		td.setAttribute("colspan", "4");
+		td.setAttribute("style", "text-align:center");
+		td.appendChild(document.createTextNode("No existen articulos en su carrito"));
+		tr.appendChild(td);
+		tBody.appendChild(tr);
+	}
+
+}
+function onError(error) {
+	document.getElementById("error").appendChild(document.createTextNode(error));
+	document.getElementById("error").appendChild(document.createElement("br"));
 }
